@@ -1,0 +1,231 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page {
+    width: 500px;
+    padding: 5% 0 0;
+    margin: auto;
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 500px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 30px 0 rgba(43, 59, 85, 0.37), 0 10px 10px 0 rgba(43, 59, 85, 0.37);
+}
+
+.form input {
+    font-family: "Gilroy Light", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 25px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 20px;
+    outline: 2px solid #2B3B55;
+}
+
+.form button {
+    font-family: "Gilroy Light", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #2B3B55;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.form button:hover, .form button:active, .form button:focus {
+    background: #2B3B55;
+}
+
+.form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 16px;
+}
+
+.form .message a {
+    color: #2B3B55;
+    text-decoration: none;
+}
+
+.form .register-form {
+    display: none;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.container:before, .container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.container .info {
+    margin: 50px auto;
+    text-align: center;
+}
+
+.container .info h1 {
+    margin: 0 0 15px;
+    padding: 0;
+    font-size: 36px;
+    font-weight: 300;
+    color: #FFFFFF;
+}
+
+.container .info span {
+    color: #4d4d4d;
+    font-size: 12px;
+}
+
+.container .info span a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+
+.body {
+    background: #CDD3DC; /* fallback for old browsers */
+    background: -webkit-linear-gradient(right, #CDD3DC, #CDD3DC);
+    background: -moz-linear-gradient(right, #CDD3DC, #CDD3DC);
+    background: -o-linear-gradient(right, #CDD3DC, #CDD3DC);
+    background: linear-gradient(to left, #CDD3DC, #CDD3DC);
+    font-family: "Gilroy Light", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.img_gsg {
+    margin-bottom: 20px;;
+    width: 100%;
+}
+
+.img_gsg1 {
+
+    width: 10%;
+}
+
+.name {
+    position: absolute;
+    font-family: "Gilroy Light";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 25px;
+    line-height: 31px;
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    color: #2B3B55;
+}
+
+.navbar, .page-footer {
+    color: #2b3b55;
+    background-color: #CDD3DC;
+}
+
+.n1 {
+    padding-right: 50px;
+}
+
+.con2 {
+    margin: 8%;
+}
+
+.a {
+    color: #2b3b55;
+    font-size: 20px;
+}
+
+/* Style the list */
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: white;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+    font-family: "Gilroy Light", sans-serif;
+    display: inline;
+    font-size: 23px;
+    text-shadow: 4px 4px 4px rgba(43, 59, 85, 0.37);
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li + li:before {
+    font-family: "Gilroy Light", sans-serif;
+    padding: 8px;
+    color: #2b3b55;
+    content: "/\00a0";
+    text-shadow: 4px 4px 4px rgba(43, 59, 85, 0.37);
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    font-family: "Gilroy Light", sans-serif;
+    color: #2b3b55;
+    text-decoration: none;
+    text-shadow: 4px 4px 4px rgba(43, 59, 85, 0.37);
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    font-family: "Gilroy Light", sans-serif;
+    color: #2b3b55;
+    text-decoration: underline;
+    text-shadow: 4px 4px 4px rgba(43, 59, 85, 0.37);
+}
+
+.card{
+    font-family: "Gilroy Light";
+    outline: 1px solid #2b3b55;
+    box-sizing: border-box;
+    box-shadow: 0 0 30px 0 rgba(43, 59, 85, 0.37), 0 10px 10px 0 rgba(43, 59, 85, 0.37);
+}
+.photo img{
+
+    width: 60%;
+}
+
+.centered{
+    font-family: "Gilroy Light";
+    font-size: 20px;
+    text-align: center;
+}
+
+.c1{
+    margin-top: -100px;
+}
+
+.page-item{
+    font-family: "Gilroy Light";
+    font-weight: 600;
+    font-size: 20px;
+}
+.page-item a{
+    color: #2b3b55;
+}
+.pagination .active:hover{
+    background: #35373a;
+}
+.con3{
+    margin-bottom: 100px;
+}
+.i1 .i2 .i3{
+    font-size: 50px;
+}
