@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +20,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
-    String name;
+    @Column(name = "role_name")
+    String roleName;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Task> tasks;
 }

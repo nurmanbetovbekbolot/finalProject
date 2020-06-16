@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<nav class="navbar navbar-expand-md  fixed-top">
+    <div class="container-fluid">
+        <img src="img/gsg.png" alt="" class="img_gsg1 mx-auto text-center" th:src="@{/img/gsg.png}" >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <a href="#otrasli" class="nav-link active">
+                    <li class="nav-item n2">Отрасли</li>
+                </a>
+                <a href="#uslugi" class="nav-link">
+                    <li class="nav-item n2">Услуги</li>
+                </a>
+                <li class="nav-item n2" style="margin-top: 5px">|</li>
+                <a href="#contact" class="nav-link">
+                    <li class="nav-item n2">Контакты</li>
+                </a>
+                <a href="authorization/login.html" class="nav-link">
+                    <li class="nav-item n2">Вход</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <img class="masthead-avatar mb-0" src="img/crm%20(1).png" alt="">
+        <h1 class="masthead-heading mb-0">Внедрите в свой бизнес
+            CRM-систему</h1>
+    </div>
+</header>
+<br><br>
+<main>
+    <section id="otrasli">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-lg-4 ">
+                    <h3>Marketing</h3>
+                    <img class="img_icon" src="img/marketing-promotion-discount-sales-business-512.png"
+                         alt="">
+                </div>
+                <div class="col-lg-4">
+                    <h3>Sales</h3>
+                    <img class="img_icon" src="img/sales-growth-bar-chart-flat-icon-vector-10193594.jpg"
+                         alt="">
+                </div>
+                <div class="col-lg-4">
+                    <h3>IT</h3>
+                    <img class="img_icon"
+                         src="img/technology-icons-4000-free-files-in-png-eps-svg-format-technology-icon-png-512_512.png"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <br><br>
+    <section id="uslugi">
+        <div class="container">
+            <h2 class="head">Наши услуги</h2><br>
+            <p style="border: 2px solid red;box-shadow: 3px 3px 3px rgba(255, 0, 0, 0.2); color: red;font-size: 20px; font-family: 'Gilroy Light'">
+                Детализированный Прайс лист на услуги формируется исходя из ТЗ(технического задания).<br>
+                Все цены, которые приведены ниже являются ориентировочными и могут быть изменены исходя из ТЗ.</p><br>
+            <div class="card-deck ">
+                <div class="card card1 c-d1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/unnamed.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Введение социальных сетей</h5>
+                    </div>
+                    <p class="centered">
+                        от 10 000 с
+                    </p>
+
+                </div>
+                <div class="card card1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/2206375.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Создание медиа контента</h5>
+                    </div>
+                    <p class="centered">
+                        от 6 000 с
+                    </p>
+
+                </div>
+                <div class="card card1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/graphic.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Графический контент (разработка)</h5>
+                    </div>
+                    <p class="centered">
+                        от 5 000 с
+                    </p>
+
+                </div>
+                <div class="card card1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/video-advertisements-clipart-1.png"
+                             alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Создание видеороликов, инфографики и анимации</h5>
+                    </div>
+                    <p class="centered">
+                        от 7 000 с
+                    </p>/
+
+                </div>
+            </div>
+            <br>
+            <div class="card-deck ">
+                <div class="card card1 c-d1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/web.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Создание веб-сайтов и промо площадок для ивентов</h5>
+                    </div>
+                    <p class="centered">
+                        от 14 000 с
+                    </p>
+
+                </div>
+                <div class="card card1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/mass.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Работа со СМИ</h5>
+                    </div>
+                    <p class="centered">
+                        от 10 000 с
+                    </p>
+
+                </div>
+                <div class="card card1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/social%20media.png" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Создание контента для различных площадок (Youtube,
+                            Tik-Tok)</h5>
+                    </div>
+                    <p class="centered">
+                        от 20 000 с
+                    </p>
+
+                </div>
+                <div class="card card1">
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/events-png-Transparent-Images-1.png"
+                             alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Проведение мероприятий, ивентов</h5>
+                    </div>
+                    <p class="centered">
+                        от 15 000 с
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <section id="contact">
+        <div class="container">
+            <h2 class="head">Контакты</h2><br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 500px">
+                        <iframe src="https://maps.google.com/maps?q=bishkek&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                frameborder="0"
+                                style="border:0" allowfullscreen></iframe>
+                    </div>
+
+                </div>
+                <div class="col-lg-1">
+                    <div class="vl"></div>
+                </div>
+
+                <div class="col-lg-5">
+                    <p class="centered1"> Консалтинговая компания Good Solutions Group</p><br>
+                    <p class="contact"><span class="iconify" data-inline="false" data-icon="el:map-marker"
+                                             style="color: #2B3B55;"></span>
+                        г. Бишкек</p>
+                    <p class="contact"><span class="iconify" data-inline="false" data-icon="ic:baseline-mail"
+                                             style="color: #2B3B55;"></span> example.com</p>
+                    <p class="contact"><span class="iconify" data-inline="false" data-icon="ant-design:phone-filled"
+                                             style="color: #2B3B55;"></span> +996 500 500 500</p>
+                    <p class="text-center">
+                        <a href="http://scripteden.com/download/eden-ui/" target="_blank"
+                           class="btn-social btn-facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="http://scripteden.com/download/eden-ui/" target="_blank"
+                           class="btn-social btn-instagram"><i class="fa fa-instagram"></i></a>
+                        <a href="http://scripteden.com/download/eden-ui/" target="_blank"
+                           class="btn-social btn-twitter"><i class="fa fa-twitter"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <br>
+</main>
+<footer class="page-footer">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3" style="font-size: 20px">© 2020 Copyright
+    </div>
+    <!-- Copyright -->
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+
+</body>
+</html>

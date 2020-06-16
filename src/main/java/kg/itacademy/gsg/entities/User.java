@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Getter
@@ -22,25 +23,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(name = "login", unique = true)
-    String login;
+    @Column(name = "email", unique = true)
+    String email;
 
     @Column(name = "password")
     String password;
-
-    @Column(name = "phone_number")
-    String phoneNumber;
 
     @Column(name = "first_name")
     String firstName;
 
     @Column(name = "last_name")
     String lastName;
+//ManyToOne
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<UserRole> roles;
 
-    @Column(name = "is_active")
-    Integer isActive;
-
-    @CreatedDate
-    @Column(name = "registration_date")
-    Date registrationDate = new Date();
 }

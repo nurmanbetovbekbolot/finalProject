@@ -4,7 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,16 +14,18 @@ import java.util.Collection;
 @Builder
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "gsg_user_roles")
-public class UserRole {
+@Table(name = "gsg_packages")
+public class Package {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(name = "role_name")
-    String roleName;
+    @Column(name = "title")
+    String title;
 
-    public UserRole(String roleName) {
-        this.roleName = roleName;
-    }
+    @Column(name = "description")
+    String description;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Category> categories;
 }
