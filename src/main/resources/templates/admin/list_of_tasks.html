@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif; color: #2b3b55">
+                            <span class="iconify"
+                                  data-inline="false"
+                                  data-icon="fe:list-task"
+                                  style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Список задач</h3>
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="card-deck">
+                <div class="card card1" th:each="task : ${taskList}">
+                    <div class="card-title border-bottom centered" th:text="${task.title}">
+                        <!--                            <span class="iconify" data-inline="false"-->
+                        <!--                                  data-icon="et:profile-male"-->
+                        <!--                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov-->
+                    </div>
+
+                    <div class="view overlay photo text-center">
+                        <img class="card-img-top" src="img/media.png"
+                             alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title centered" th:text="${task.description}">
+                        </h5>
+
+                    </div>
+                    <p class="centered">Статус:
+                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"
+                                                                         data-icon="uil:process"
+                                                                         style="font-size: 25px;color: darkorange; "></span>
+                        </button>
+                    </p>
+                    <p class="centered">
+                        <button type="button" class="btn btn-link"><span class="iconify i1" data-inline="false"
+                                                                         data-icon="uil:process"
+                                                                         style="color: darkorange;font-size: 30px;"></span>
+                        </button>
+                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"
+                                                                         data-icon="ic:outline-done"
+                                                                         style="color: green;font-size: 30px;"></span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${taskList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/task/list(page=${taskList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, taskList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${taskList.number == i}">
+                        <a th:href="@{/task/list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${taskList.number == i}">
+
+                        <a th:href="@{/task/list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${taskList.hasNext()}">
+                    <a class="page-link" th:href="@{/task/list(page=${taskList.number+1})}"> > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>
