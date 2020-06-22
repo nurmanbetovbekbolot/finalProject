@@ -1,8 +1,12 @@
 package kg.itacademy.gsg.controllers;
 
 import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.models.CategoryModel;
 import kg.itacademy.gsg.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +18,14 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @GetMapping(value = "/list")
-    public String getCategoryList(Model model) {
-        List<Category> categoryList = categoryService.getAllCategories();
+    public String getCategoryList(@PageableDefault(5) Pageable pageable, Model model) {
+        Page<CategoryModel> categoryList = categoryService.findAll(pageable);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("bool", true);
-        return "categoryList";
+        return "admin/list_of_categories";
     }
 
     @GetMapping(value = "/{id}")
@@ -32,8 +36,15 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/create")
-    public String addCategory(@Valid @ModelAttribute("category") Category category) {
-        categoryService.saveCategory(category);
+    public String addCategory(@Valid @ModelAttribute("category") CategoryModel categoryModel) {
+        categoryService.saveCategory(categoryModel);
+        return "redirect:/category/list";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updateCategory(@Valid @ModelAttribute("package") CategoryModel categoryModel, @PathVariable("id") Long id) {
+        categoryModel.setId(id);
+        categoryService.updateCategory(categoryModel);
         return "redirect:/category/list";
     }
 

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class NotificationServiceImpl implements NotificationService {
     @Autowired
-    NotificationRepository notificationRepository;
+    private NotificationRepository notificationRepository;
 
     @Override
     public List<Notification> getAllNotifications() {

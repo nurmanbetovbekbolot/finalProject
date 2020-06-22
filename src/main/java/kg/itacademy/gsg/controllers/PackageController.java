@@ -1,27 +1,30 @@
 package kg.itacademy.gsg.controllers;
 
 import kg.itacademy.gsg.entities.Package;
+import kg.itacademy.gsg.models.PackageModel;
 import kg.itacademy.gsg.services.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/package")
 public class PackageController {
     @Autowired
-    PackageService packageService;
+    private PackageService packageService;
 
     @GetMapping(value = "/list")
-    public String getPackageList(Model model) {
-        List<Package> packageList = packageService.getAllPackages();
+    public String getPackageList(@PageableDefault(3) Pageable pageable, Model model) {
+        Page<PackageModel> packageList = packageService.findAll(pageable);
         model.addAttribute("packageList", packageList);
         model.addAttribute("bool", true);
-        return "packageList";
+        return "admin/list_of_baskets";
     }
 
     @GetMapping(value = "/{id}")
@@ -32,8 +35,15 @@ public class PackageController {
     }
 
     @PostMapping(value = "/create")
-    public String addTask(@Valid @ModelAttribute("package") Package p) {
-        packageService.savePackage(p);
+    public String addPackage(@Valid @ModelAttribute("package") PackageModel packageModel) {
+        packageService.savePackage(packageModel);
+        return "redirect:/package/list";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updatePackage(@Valid @ModelAttribute("package") PackageModel packageModel, @PathVariable("id") Long id) {
+        packageModel.setId(id);
+        packageService.updatePackage(packageModel);
         return "redirect:/package/list";
     }
 

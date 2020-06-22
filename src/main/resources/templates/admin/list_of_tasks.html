@@ -1,101 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-            crossorigin="anonymous"></script>
-</head>
-<body>
-<div id="viewport">
-    <!-- Sidebar -->
-    <div id="sidebar"><br>
-        <header>
-            <ul class="nav">
-                <li class="nav-item n1" style="font-size: 20px; color: #2b3b55; margin-left: 30px;">
-                    <span class="iconify" data-inline="false" data-icon="et:profile-male"
-                          style="font-size: 50px; color: #2b3b55;"></span> Asan Asanov
-                </li>
-                <li class="nav-item"><a href="../authorization/login.html" class="nav-link">
-                    <span class="iconify" data-inline="false" data-icon="cil:account-logout"
-                          style="color: #2b3b55; font-size: 25px; margin-top: -12px"></span></a></li>
-            </ul>
-            <hr class="hr">
-        </header>
-        <br>
-        <ul class="nav nav1">
-            <li>
-                <a href="list_of_baskets.html">
-                    <span class="iconify" data-inline="false" data-icon="si-glyph:document-bullet-list"
-                          style="color: #2b3b55;font-size: 30px;"></span> Список пакетов
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="iconify" data-inline="false" data-icon="fe:list-task"
-                          style="color: #2b3b55;font-size: 30px;"></span>
-                    Список задач
-                </a>
-            </li>
-            <li>
-                <a href="list_of_clients.html">
-                    <span class="iconify" data-inline="false" data-icon="gridicons:list-ordered"
-                          style="color: #2b3b55;font-size: 30px;"></span> Список клиентов
-                </a>
-            </li>
-            <li>
-                <a href="employee_management.html">
-                    <span class="iconify" data-inline="false" data-icon="ri:user-settings-fill"
-                          style="color: #2b3b55;font-size: 30px;"></span> Управление сотрудниками
-                </a>
-            </li>
-        </ul>
-        <footer class="fixed-bottom">
-            <img src="../../static/img/gsg.png" alt="" class="mx-auto text-center">
-        </footer>
-    </div>
-    <br>
-    <!-- Content -->
-    <div id="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="card-deck c-d">
-                    <div class="card card1 border mb-5" style="max-width: 25rem;">
-                        <div class="card-header"><h4 class="centered">Всего пакетов</h4></div>
-                        <div class="card-body">
-                            <p class="card-text">+99</p>
-                        </div>
-                    </div>
-                    <div class="card card1 border mb-5" style="max-width: 25rem;">
-                        <div class="card-header"><h4 class="centered">Всего выполненных заказов</h4></div>
-                        <div class="card-body">
-                            <p class="card-text">+99</p>
-                        </div>
-                    </div>
-                    <div class="card card1 border mb-5" style="max-width: 25rem;">
-                        <div class="card-header"><h4 class="centered">Всего довольных клиентов</h4></div>
-                        <div class="card-body">
-                            <p class="card-text">+99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif; color: #2b3b55">
-                        <span class="iconify"
-                              data-inline="false"
-                              data-icon="fe:list-task"
-                              style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                            <span class="iconify"
+                                  data-inline="false"
+                                  data-icon="fe:list-task"
+                                  style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
                         Список задач</h3>
 
                 </div>
@@ -104,117 +19,20 @@
         <br>
         <div class="container">
             <div class="card-deck">
-                <div class="card card1">
-                    <h5>
-                        <div class="card-title border-bottom centered">
-                            <span class="iconify" data-inline="false"
-                                  data-icon="et:profile-male"
-                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov
-                        </div>
-                    </h5>
+                <div class="card card1" th:each="task : ${taskList}">
+                    <div class="card-title border-bottom centered" th:text="${task.title}">
+                        <!--                            <span class="iconify" data-inline="false"-->
+                        <!--                                  data-icon="et:profile-male"-->
+                        <!--                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov-->
+                    </div>
+
                     <div class="view overlay photo text-center">
-                        <img class="card-img-top"
-                             src="../../static/img/unnamed.png"
+                        <img class="card-img-top" src="img/media.png"
                              alt="Card image cap">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title centered">Введение социальных сетей</h5>
-                        <p class="card-text">- продвижение</p><br>
-
-                    </div>
-                    <p class="centered">Статус:
-                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="font-size: 25px;color: darkorange;"></span>
-                        </button>
-                    </p>
-                    <p class="centered">
-                        <button type="button" class="btn btn-link"><span class="iconify i1" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="color: darkorange;font-size: 30px;"></span>
-                        </button>
-                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"
-                                                                         data-icon="ic:outline-done"
-                                                                         style="color: green;font-size: 30px;"></span>
-                        </button>
-                    </p>
-
-                </div>
-                <div class="card card1">
-                    <div class="card-title border-bottom centered">
-                            <span class="iconify" data-inline="false"
-                                  data-icon="et:profile-male"
-                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov
-                    </div>
-
-                    <div class="view overlay photo text-center">
-                        <img class="card-img-top" src="../../static/img/mass.png" alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title centered">Работа со СМИ</h5>
-
-                    </div>
-                    <p class="centered">Статус:
-                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="font-size: 25px;color: darkorange; "></span>
-                        </button>
-                    </p>
-                    <p class="centered">
-                        <button type="button" class="btn btn-link"><span class="iconify i1" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="color: darkorange;font-size: 30px;"></span>
-                        </button>
-                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"
-                                                                         data-icon="ic:outline-done"
-                                                                         style="color: green;font-size: 30px;"></span>
-                        </button>
-                    </p>
-                </div>
-                <div class="card card1">
-                    <div class="card-title border-bottom centered">
-                            <span class="iconify" data-inline="false"
-                                  data-icon="et:profile-male"
-                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov
-                    </div>
-
-                    <div class="view overlay photo text-center">
-                        <img class="card-img-top" src="../../static/img/video-advertisements-clipart-1.png" alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title centered">Создание видеороликов, инфографики и анимации</h5>
-
-                    </div>
-                    <p class="centered">Статус:
-                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="font-size: 25px;color: darkorange;"></span>
-                        </button>
-                    </p>
-                    <p class="centered">
-                        <button type="button" class="btn btn-link"><span class="iconify i1" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="color: darkorange;font-size: 30px;"></span>
-                        </button>
-                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"
-                                                                         data-icon="ic:outline-done"
-                                                                         style="color: green;font-size: 30px;"></span>
-                        </button>
-                    </p>
-                </div>
-                <div class="card card1">
-                    <div class="card-title border-bottom centered">
-                            <span class="iconify" data-inline="false"
-                                  data-icon="et:profile-male"
-                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov
-                    </div>
-
-                    <div class="view overlay photo text-center">
-                        <img class="card-img-top" src="../../static/img/media.png"
-                             alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title centered">Создание медиа контента (фото съемка)</h5>
+                        <h5 class="card-title centered" th:text="${task.description}">
+                        </h5>
 
                     </div>
                     <p class="centered">Статус:
@@ -235,37 +53,26 @@
                     </p>
                 </div>
             </div>
+        </div>
+        <br><br>
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${taskList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/task/list(page=${taskList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, taskList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${taskList.number == i}">
+                        <a th:href="@{/task/list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${taskList.number == i}">
 
+                        <a th:href="@{/task/list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${taskList.hasNext()}">
+                    <a class="page-link" th:href="@{/task/list(page=${taskList.number+1})}"> > </a>
+                </li>
+            </ul>
         </div>
     </div>
-    <br><br>
-    <div class="container con3">
-        <ul class="pagination justify-content-center">
-            <li class="page-item"><a href="#" class="page-link"><</a></li>
-            <li class="page-item active"><a href="#" class="page-link ">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item"><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">></a></li>
-        </ul>
-    </div>
-</div>
-</div>
-
-</div>
-<script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-</body>
-</html>
+</layout:html>

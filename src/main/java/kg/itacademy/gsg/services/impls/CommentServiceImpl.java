@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Override
     public List<Comment> getAllComments() {

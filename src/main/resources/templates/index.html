@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -16,7 +16,7 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 <nav class="navbar navbar-expand-md  fixed-top">
     <div class="container-fluid">
-        <img src="img/gsg.png" alt="" class="img_gsg1 mx-auto text-center" th:src="@{/img/gsg.png}" >
+        <img src="img/gsg.png" alt="" class="img_gsg1 mx-auto text-center" th:src="@{/img/gsg.png}">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
@@ -33,6 +33,10 @@
                 </a>
                 <a href="authorization/login.html" class="nav-link">
                     <li class="nav-item n2">Вход</li>
+                </a>
+                <a href="/logout" class="nav-link">
+                    <li class="nav-item n2" sec:authorize="isAuthenticated()"> Выход
+                    </li>
                 </a>
             </ul>
         </div>

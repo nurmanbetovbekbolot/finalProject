@@ -1,9 +1,13 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.exceptions.RecordNotFoundException;
+import kg.itacademy.gsg.models.CategoryModel;
 import kg.itacademy.gsg.repositories.CategoryRepository;
 import kg.itacademy.gsg.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +16,9 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private TaskServiceImpl taskService;
 
     @Override
     public List<Category> getAllCategories() {
@@ -20,7 +26,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category saveCategory(Category category) {
+    public Category saveCategory(CategoryModel categoryModel) {
+        Category category = new Category();
+        category.setPackageId(categoryModel.getPackageId());
+        category.setTitle(categoryModel.getTitle());
         return categoryRepository.save(category);
     }
 
@@ -31,12 +40,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void updateCategory(Long id, Category category) {
+    public Page<CategoryModel> findAll(Pageable pageable) {
+        return categoryRepository.findAllCategoriesWithPagination(pageable);
+    }
 
+    @Override
+    public Category updateCategory(CategoryModel categoryModel) {
+        return categoryRepository.findById(categoryModel.getId())
+                .map(newCategory -> {
+                    newCategory.setPackageId(categoryModel.getPackageId());
+                    newCategory.setTitle(categoryModel.getTitle());
+                    return categoryRepository.save(newCategory);
+                })
+                .orElseThrow(() ->
+                        new RecordNotFoundException("Category not found with id:" + categoryModel.getId()));
     }
 
     @Override
     public void deleteCategoryById(Long id) {
+        taskService.deleteTaskByCategoryId(id);
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteCategoryByPackageId(Long packageId) {
+        categoryRepository.deleteCategoryByPackageId(packageId);
     }
 }

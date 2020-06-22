@@ -1,8 +1,12 @@
 package kg.itacademy.gsg.controllers;
 
 import kg.itacademy.gsg.entities.Task;
+import kg.itacademy.gsg.models.TaskModel;
 import kg.itacademy.gsg.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +19,14 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    TaskService taskService;
+    private TaskService taskService;
 
     @GetMapping(value = "/list")
-    public String getTaskList(Model model) {
-        List<Task> taskList = taskService.getAllTasks();
+    public String getTaskList(@PageableDefault(3) Pageable pageable, Model model) {
+        Page<TaskModel> taskList = taskService.findAll(pageable);
         model.addAttribute("taskList", taskList);
         model.addAttribute("bool", true);
-        return "taskList";
+        return "admin/list_of_tasks";
     }
 
     @GetMapping(value = "/{id}")
@@ -33,8 +37,15 @@ public class TaskController {
     }
 
     @PostMapping(value = "/create")
-    public String addTask(@Valid @ModelAttribute("task") Task task) {
-        taskService.saveTask(task);
+    public String addTask(@Valid @ModelAttribute("task") TaskModel taskModel) {
+        taskService.saveTask(taskModel);
+        return "redirect:/task/list";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updateTask(@Valid @ModelAttribute("package") TaskModel taskModel, @PathVariable("id") Long id) {
+        taskModel.setId(id);
+        taskService.updateTask(taskModel);
         return "redirect:/task/list";
     }
 

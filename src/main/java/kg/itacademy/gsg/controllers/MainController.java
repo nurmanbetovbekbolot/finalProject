@@ -3,6 +3,7 @@ package kg.itacademy.gsg.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
@@ -17,13 +18,8 @@ public class MainController {
         return "authorization/login";
     }
 
-    @GetMapping("/clients")
-    public String a(){
-        return "admin/list_of_clients";
-    }
-
-    @GetMapping("/user")
-    public String userIndex() {
-        return "user/index";
+    @RequestMapping(value = "/index")
+    public String index() {
+        return "redirect:/";
     }
 }

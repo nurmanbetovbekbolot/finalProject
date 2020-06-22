@@ -2,6 +2,7 @@ package kg.itacademy.gsg.entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(name = "comment_text")
+    @Column(name = "comment_text",columnDefinition = "text")
     String commentText;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -32,7 +33,7 @@ public class Comment {
     @JoinColumn(name = "task_id", nullable = false)
     Task task;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_date")
-    Date createdDate = new Date();
+    Date createdDate;
 }

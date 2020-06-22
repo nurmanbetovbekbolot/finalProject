@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,7 +14,6 @@
 <body class="body">
 <div class="login-page">
     <img src="img/gsg.png" alt="" class="img_gsg mx-auto text-center" th:src="@{/img/gsg.png}">
-    <!--    <img th:src="@{/images/gsg.png}" alt="" class="img_gsg mx-auto text-center">-->
     <div class="form">
         <form class="login-form" th:action="@{/login}" method="post">
             <div th:if="${param.error}">
@@ -28,9 +28,7 @@
                    placeholder="логин"/>
             <input type="password" id="password" name="password" class="form-control" placeholder="пароль"/>
             <button class="btn">Войти</button>
-            <div class="form-group">
-                <span>Новый пользователь? <a href="/" th:href="@{/registration}">Зарегистрироваться</a></span>
-            </div>
+
         </form>
     </div>
 </div>

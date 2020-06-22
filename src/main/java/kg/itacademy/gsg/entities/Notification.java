@@ -1,9 +1,8 @@
 package kg.itacademy.gsg.entities;
 
-import kg.itacademy.gsg.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,7 +25,7 @@ public class Notification {
     @Column(name = "message")
     String message;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_date")
-    Date createdDate = new Date();
+    Date createdDate;
 }

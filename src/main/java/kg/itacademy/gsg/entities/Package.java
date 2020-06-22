@@ -23,9 +23,6 @@ public class Package {
     @Column(name = "title")
     String title;
 
-    @Column(name = "description")
+    @Column(name = "description",columnDefinition = "text")
     String description;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    List<Category> categories;
 }

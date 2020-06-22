@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/notification")
 public class NotificationController {
     @Autowired
-    NotificationService notificationService;
+    private NotificationService notificationService;
 
     @GetMapping(value = "/list")
     public String getNotificationList(Model model) {

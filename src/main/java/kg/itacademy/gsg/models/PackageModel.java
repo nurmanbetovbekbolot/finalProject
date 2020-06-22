@@ -1,6 +1,5 @@
 package kg.itacademy.gsg.models;
 
-import kg.itacademy.gsg.entities.UserRole;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,13 +7,13 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserModel {
+public class PackageModel {
+
     Long id;
-    String email;
-    String password;
-    String firstName;
-    String lastName;
-    UserRole role;
+    String title;
+    String description;
+
 }

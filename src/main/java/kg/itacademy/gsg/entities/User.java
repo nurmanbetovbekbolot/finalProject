@@ -23,25 +23,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     String password;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     String lastName;
-//ManyToOne
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
-    private Collection<UserRole> roles;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id")
+    UserRole role;
 }
