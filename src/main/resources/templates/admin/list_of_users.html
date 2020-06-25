@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-11">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Список пользователей</h3>
+                </div>
+                <div class="col-lg-1">
+                    <a th:href="'/user/form'">
+                        <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
+                              style="color: #2b3b55;font-size: 40px;"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="accordion md-accordion" th:id="'accordionEx'+${user.id}" role="tablist"
+                 aria-multiselectable="true"
+                 th:each="user : ${userList}">
+                <div class="card card_acc">
+                    <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
+                         th:id="'headingOne'+${user.id}">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <h5 class="mb-0" style="color: #2b3b55;font-family: 'Gilroy Light'"
+                                    th:text="${user.firstName+' '+user.lastName}">
+                                </h5>
+                            </div>
+                            <!--                            <div class="col-lg-1">-->
+                            <!--                                <div class="row">-->
+                            <!--                                    <a th:href="'/user/' + ${user.id}">-->
+                            <!--                                    <span class="iconify" data-icon="fa-solid:edit"-->
+                            <!--                                          data-inline="false" style="color: #2b3b55;font-size:25px;"></span>-->
+                            <!--                                        &lt;!&ndash;                                    Обновить&ndash;&gt;-->
+                            <!--                                    </a>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="col-lg-2">
+                                <div class="row">
+                                    <a data-toggle="collapse" th:attr="data-parent='#accordionEx'+${user.id}"
+                                       th:href="'#collapseOne'+${user.id}"
+                                       aria-expanded="true"
+                                       aria-controls="collapseOne1">
+                                        <span class="iconify centered" data-inline="false"
+                                              data-icon="dashicons:arrow-down-alt2"
+                                              style="color: #2b3b55;font-size:25px;"
+                                        ></span></a>
+
+                                    <a th:href="'/user/' + ${user.id}" type="button" style="color: white;"
+                                       class="btn btn-link">
+                                        <span class="iconify" data-icon="fa-solid:edit"
+                                              style="color: #2b3b55;font-size:25px;"></span>
+                                            <!--                                    Обновить-->
+                                    </a>
+
+                                    <button th:if="${userName != user.email}" type="button" style="color: white;"
+                                            class="btn btn-link" data-toggle="modal"
+                                            th:attr="data-target='#recordDeleteModal'+${user.id}">
+                                        <span class="iconify" data-inline="false"
+                                              data-icon="eva:person-delete-fill"
+                                              style="color: #2b3b55;font-size:25px;"></span>
+                                    </button>
+                                    <div data-backdrop="false" class="modal fade"
+                                         th:attr="id='recordDeleteModal'+${user.id}" tabindex="-1" role="dialog"
+                                         aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="recordDeleteModalLabel">Удаление
+                                                        пользователя</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <label>Вы действительно хотите удалить?</label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Нет
+                                                    </button>
+                                                    <form th:action="@{/user/delete/{id}(id = ${user.id})}"
+                                                          method="post">
+                                                        <button type="submit" class="btn btn-info m-t-10">Да</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:id="'collapseOne'+${user.id}" class="collapse show" role="tabpanel"
+                         th:attr="data-parent='#accordionEx'+${user.id}"
+                         aria-labelledby="headingOne1">
+                        <div class="card-body c-b">
+                            <div class="card-deck">
+                                <div class="card card_acc1">
+                                    <h5 class="card-title" th:text="${user.email}">Логин</h5>
+                                </div>
+                                <div class="card card_acc1">
+                                    <h5 class="card-title" th:text="${user.getRole().getRoleName()}">Роль</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${userList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/user/list(page=${userList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, userList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${userList.number == i}">
+                        <a th:href="@{/user/list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${userList.number == i}">
+
+                        <a th:href="@{/user/list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${userList.hasNext()}">
+                    <a class="page-link" th:href="@{/user/list(page=${userList.number+1})}"> > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>

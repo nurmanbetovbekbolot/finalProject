@@ -1,0 +1,64 @@
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="leftMenu">
+        <!-- Sidebar -->
+        <header>
+            <ul class="nav">
+                <li class="nav-item n1" style="font-size: 20px; color: #2b3b55; margin-left: 30px;">
+                    <span class="iconify" data-inline="false" data-icon="et:profile-male"
+                          style="font-size: 50px; color: #2b3b55;"></span>
+                    <p th:text="${userName}"></p>
+                </li>
+                <li class="nav-item"><a href="/logout" class="nav-link">
+                    <span class="iconify" data-inline="false" data-icon="cil:account-logout"
+                          style="color: #2b3b55; font-size: 25px; margin-top: -12px"></span></a></li>
+            </ul>
+            <hr class="hr">
+        </header>
+        <br>
+        <ul class="nav nav1">
+            <li>
+                <a href="/package/list">
+                    <span class="iconify" data-inline="false" data-icon="si-glyph:document-bullet-list"
+                          style="color: #2b3b55;font-size: 30px;"></span> Список пакетов
+                </a>
+            </li>
+
+            <li>
+                <a href="/category/list">
+                    <span class="iconify" data-inline="false" data-icon="cil:list-rich"
+                          style="color: #2b3b55;font-size: 30px;"></span> Список услуг
+                </a>
+            </li>
+
+            <li>
+                <a href="/task/list">
+                    <span class="iconify" data-inline="false" data-icon="fe:list-task"
+                          style="color: #2b3b55;font-size: 30px;"></span>
+                    Список задач
+                </a>
+            </li>
+
+            <li>
+                <a href="/order/list">
+                    <span class="iconify" data-inline="false" data-icon="ic:baseline-work"
+                          style="color: #2b3b55;font-size: 30px;"></span>
+                    Список заказов
+                </a>
+            </li>
+
+            <li>
+                <a href="/user/list">
+                    <span class="iconify" data-inline="false" data-icon="ri:user-settings-fill"
+                          style="color: #2b3b55;font-size: 30px;"></span> Управление пользователями
+                </a>
+            </li>
+
+        </ul>
+        <footer class="fixed-bottom" style="position:absolute">
+            <img src="img/gsg.png" alt="" style="max-width:90%" th:src="@{/img/gsg.png}">
+        </footer>
+    </div>
+</html>
