@@ -22,40 +22,44 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    String username;
+
     @GetMapping(value = "/list")
     public String getUserListForAdmin(@PageableDefault(5) Pageable pageable,Model model, Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
-        String userName = userPrincipal.getUsername();
+        getUserInfo(authentication);
         Page<UserModel> userList = userService.findAll(pageable);
         model.addAttribute("userList", userList);
-        model.addAttribute("userName", userName);
+        model.addAttribute("userName", username);
         model.addAttribute("bool", true);
         return "admin/list_of_users";
     }
-
-    @GetMapping(value = "/list/forManager")
-    public String getUserListForManager(@PageableDefault(5) Pageable pageable,Model model, Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
-        String userName = userPrincipal.getUsername();
-        Page<UserModel> userList = userService.findAll(pageable);
-        model.addAttribute("userList", userList);
-        model.addAttribute("userName", userName);
-        model.addAttribute("bool", true);
-        return "admin/list_of_users";
-    }
+//
+//    @GetMapping(value = "/list/forManager")
+//    public String getUserListForManager(@PageableDefault(5) Pageable pageable,Model model, Authentication authentication) {
+//        getUserInfo(authentication);
+//        Page<UserModel> userList = userService.findAll(pageable);
+//        model.addAttribute("userList", userList);
+//        model.addAttribute("userName", username);
+//        model.addAttribute("bool", true);
+//        return "admin/list_of_users";
+//    }
 
     @GetMapping(value = "/form")
-    public String getCreateUserForm(Model model) {
+    public String getCreateUserForm(Model model, Authentication authentication) {
+        getUserInfo(authentication);
         model.addAttribute("add", true);
+        model.addAttribute("userName", username);
         return "admin/user_form";
     }
 
 
     @GetMapping(value = "/{id}")
-    public String userProfile(@PathVariable("id") Long id, Model model) {
+    public String userProfile(@PathVariable("id") Long id, Model model, Authentication authentication) {
+        getUserInfo(authentication);
         User user = userService.getUserById(id);
         model.addAttribute("add", false);
         model.addAttribute("user", user);
+        model.addAttribute("userName", username);
         return "admin/user_form";
     }
 
@@ -77,5 +81,10 @@ public class UserController {
     public String deleteById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
         return "redirect:/user/list";
+    }
+
+    private void getUserInfo(Authentication authentication){
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        username = userPrincipal.getUsername();
     }
 }

@@ -18,8 +18,13 @@ public interface CategoryService {
 
     Category saveCategory(CategoryModel categoryModel);
 
+    List<CategoryModel> getAllByPackageId(Long id);
+
+    Category saveCategory(Category category);
+
     void deleteCategoryById(Long categoryId);
 
     void deleteCategoryByPackageId(Long packageId);
 
+    Page<CategoryModel> getAllByPackageId(Long id, Pageable pageable);
 }

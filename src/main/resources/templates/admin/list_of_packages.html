@@ -14,13 +14,11 @@
                         Список пакетов
                     </h3>
                 </div>
-
                 <div class="col-lg-1">
-                    <button type="button" class="btn btn-link">
-                        <span class="iconify" data-inline="false"
-                              data-icon="si-glyph:basket-plus"
+                    <a th:href="'/package/form'">
+                        <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
                               style="color: #2b3b55;font-size: 40px;"></span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -33,12 +31,12 @@
                     <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
                          th:id="'headingOne'+${p.id}">
                         <div class="row">
-                            <div class="col-lg-11">
+                            <div class="col-lg-10">
                                 <h5 class="mb-0" style="color: #2b3b55;font-family: 'Gilroy Light'"
                                     th:text="${p.title}">
                                 </h5>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-2">
                                 <div class="row">
                                     <a data-toggle="collapse" th:attr="data-parent='#accordionEx'+${p.id}"
                                        th:href="'#collapseOne'+${p.id}"
@@ -46,13 +44,24 @@
                                        aria-controls="collapseOne1">
                                         <span class="iconify centered" data-inline="false"
                                               data-icon="dashicons:arrow-down-alt2"
-                                              style="color: #2b3b55; font-size:25px; margin-top: -10px"></span></a>
+                                              style="color: #2b3b55; font-size:25px; margin-top: -10px">
+                                        </span>
+                                    </a>
+                                    <a th:href="'/package/'+${p.id}+'/category/list'"
+                                       title="Список услуг этого пакета" class="btn btn-link">
+                                        <span class="iconify"
+                                              data-icon="ant-design:unordered-list-outlined"
+                                              data-inline="false"
+                                              style="color: #2b3b55;font-size:25px;">
+                                        </span>
+                                    </a>
                                     <button type="button" style="color: white;"
                                             class="btn btn-link" data-toggle="modal"
                                             th:attr="data-target='#recordDeleteModal'+${p.id}">
-                                    <span class="iconify" data-inline="false"
-                                          data-icon="ant-design:delete-filled"
-                                          style="color: #2b3b55;font-size:25px;"></span>
+                                        <span class="iconify" data-inline="false"
+                                              data-icon="ant-design:delete-filled"
+                                              style="color: #2b3b55;font-size:25px;">
+                                        </span>
                                     </button>
                                     <div data-backdrop="false" class="modal fade"
                                          th:attr="id='recordDeleteModal'+${p.id}" tabindex="-1" role="dialog"
@@ -86,22 +95,17 @@
                             </div>
                         </div>
                     </div>
-                    <div th:id="'collapseOne'+${p.id}" class="collapse show" role="tabpanel"
+                    <div th:id="'collapseOne'+${p.id}" class="collapse show card" role="tabpanel"
                          th:attr="data-parent='#accordionEx'+${p.id}"
                          aria-labelledby="headingOne1">
-                        <div class="card-body c-b">
-                            <div class="card-deck">
-                                <div class="card card_acc1">
-                                    <h5 class="card-title" th:text="${p.title}">Название </h5>
-                                </div>
-                                <div class="card card_acc1">
-                                    <h5 class="card-title" th:text="${p.description}">Описание</h5>
-                                </div>
-                            </div>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${p.description}">Описание</p>
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
+
         </div>
         <br><br>
 

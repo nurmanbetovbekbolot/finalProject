@@ -15,8 +15,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 
-    @Query(value = "select u from User u join u.role r where r.roleName = :name")
-    List<User> getByRole(@Param("name") String name);
+    @Query("select new kg.itacademy.gsg.models.UserModel(user.id,user.email,user.password,user.firstName,user.lastName,user.role) from User user join UserRole r on user.role.id = r.id where r.roleName = :name")
+    List<UserModel> getByRole(@Param("name") String name);
 
     @Query("select new kg.itacademy.gsg.models.UserModel(user.id,user.email,user.password,user.firstName,user.lastName,user.role) FROM User user ORDER BY user.firstName ASC")
     Page<UserModel> findAllUsersWithPagination(Pageable pageable);

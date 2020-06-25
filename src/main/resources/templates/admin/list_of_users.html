@@ -54,18 +54,19 @@
                                               style="color: #2b3b55;font-size:25px;"
                                         ></span></a>
 
-                                    <a th:href="'/user/' + ${user.id}">
-                                    <span class="iconify" data-icon="fa-solid:edit"
-                                          style="color: #2b3b55;font-size:25px;"></span>
-                                        <!--                                    Обновить-->
+                                    <a th:href="'/user/' + ${user.id}" type="button" style="color: white;"
+                                       class="btn btn-link">
+                                        <span class="iconify" data-icon="fa-solid:edit"
+                                              style="color: #2b3b55;font-size:25px;"></span>
+                                            <!--                                    Обновить-->
                                     </a>
 
                                     <button th:if="${userName != user.email}" type="button" style="color: white;"
                                             class="btn btn-link" data-toggle="modal"
                                             th:attr="data-target='#recordDeleteModal'+${user.id}">
-                                    <span class="iconify" data-inline="false"
-                                          data-icon="eva:person-delete-fill"
-                                          style="color: #2b3b55;font-size:25px;"></span>
+                                        <span class="iconify" data-inline="false"
+                                              data-icon="eva:person-delete-fill"
+                                              style="color: #2b3b55;font-size:25px;"></span>
                                     </button>
                                     <div data-backdrop="false" class="modal fade"
                                          th:attr="id='recordDeleteModal'+${user.id}" tabindex="-1" role="dialog"
@@ -114,8 +115,8 @@
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
-            <br/>
         </div>
         <br><br>
 

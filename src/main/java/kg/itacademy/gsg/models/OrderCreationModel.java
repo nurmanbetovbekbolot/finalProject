@@ -1,11 +1,7 @@
 package kg.itacademy.gsg.models;
 
-import kg.itacademy.gsg.entities.Category;
-import kg.itacademy.gsg.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Date;
 
 @Getter
 @Setter
@@ -14,11 +10,10 @@ import java.util.Date;
 @Builder
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaskModel {
+public class OrderCreationModel {
     Long id;
     String title;
-    String description;
-    Status status;
-    Category categoryId;
-    Date createdDate;
+    Long clientId;
+    Long managerId;
+    Long packageId;
 }

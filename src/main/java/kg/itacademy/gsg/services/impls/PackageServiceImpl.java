@@ -2,7 +2,9 @@ package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.Package;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
+import kg.itacademy.gsg.models.CategoryModel;
 import kg.itacademy.gsg.models.PackageModel;
+import kg.itacademy.gsg.models.TaskModel;
 import kg.itacademy.gsg.repositories.PackageRepository;
 import kg.itacademy.gsg.services.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -21,12 +24,18 @@ public class PackageServiceImpl implements PackageService {
 
     @Autowired
     private  CategoryServiceImpl categoryService;
+
     @Autowired
     private TaskServiceImpl taskService;
 
     @Override
     public List<Package> getAllPackages() {
         return packageRepository.findAll();
+    }
+
+    @Override
+    public List<PackageModel> getAll() {
+        return packageRepository.getAll();
     }
 
     @Override
@@ -40,6 +49,17 @@ public class PackageServiceImpl implements PackageService {
         Optional<Package> p = packageRepository.findById(id);
         return p.orElse(new Package());
     }
+
+    @Override
+    public Page<CategoryModel> getAllCategoriesByPackageId(Long id, Pageable pageable) {
+        return categoryService.getAllByPackageId(id, pageable);
+    }
+
+    @Override
+    public List<PackageModel> findAllPackagesNotInOrder() {
+        return packageRepository.findAllPackagesNotInOrder();
+    }
+
 
     @Override
     public Package updatePackage(PackageModel packageModel) {
@@ -57,6 +77,11 @@ public class PackageServiceImpl implements PackageService {
         Package p = new Package();
         p.setTitle(packageModel.getTitle());
         p.setDescription(packageModel.getDescription());
+        return packageRepository.save(p);
+    }
+
+    @Override
+    public Package savePackage(Package p) {
         return packageRepository.save(p);
     }
 

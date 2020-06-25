@@ -25,4 +25,9 @@ public class Package {
 
     @Column(name = "description",columnDefinition = "text")
     String description;
+
+    public Package(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

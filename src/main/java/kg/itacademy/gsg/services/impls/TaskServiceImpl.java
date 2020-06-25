@@ -36,12 +36,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Page<TaskModel> findAllByCategoryId(Long id, Pageable pageable) {
+        return taskRepository.findAllByCategoryId(id, pageable);
+    }
+
+    @Override
+    public List<TaskModel> findAllByCategoryId(Long id) {
+        return taskRepository.findAllByCategoryId(id);
+    }
+
+    @Override
     public Task updateTask(TaskModel taskModel) {
         return taskRepository.findById(taskModel.getId())
                 .map(newTask -> {
                     newTask.setTitle(taskModel.getTitle());
                     newTask.setDescription(taskModel.getDescription());
-                    newTask.setCategoryId(taskModel.getCategoryId());
                     newTask.setStatus(taskModel.getStatus());
                     return taskRepository.save(newTask);
                 })
@@ -58,6 +67,10 @@ public class TaskServiceImpl implements TaskService {
         task.setCreatedDate(taskModel.getCreatedDate());
         return taskRepository.save(task);
     }
+
+    @Override
+    public Task saveTask(Task task) {
+        return taskRepository.save(task);    }
 
 
     @Override

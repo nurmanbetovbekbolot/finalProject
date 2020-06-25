@@ -2,6 +2,8 @@ package kg.itacademy.gsg.entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+
 import javax.persistence.*;
 
 @Getter
@@ -21,10 +23,12 @@ public class Category {
     @Column(name = "title")
     String title;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    List<Task> tasks;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "package_id")
     Package packageId;
+
+    public Category(String title, Package packageId) {
+        this.title = title;
+        this.packageId = packageId;
+    }
 }

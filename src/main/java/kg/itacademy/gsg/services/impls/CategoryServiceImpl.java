@@ -17,6 +17,10 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PackageServiceImpl packageService;
+
     @Autowired
     private TaskServiceImpl taskService;
 
@@ -28,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category saveCategory(CategoryModel categoryModel) {
         Category category = new Category();
-        category.setPackageId(categoryModel.getPackageId());
+        category.setPackageId(packageService.getPackageById(categoryModel.getPackageId()));
         category.setTitle(categoryModel.getTitle());
         return categoryRepository.save(category);
     }
@@ -48,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category updateCategory(CategoryModel categoryModel) {
         return categoryRepository.findById(categoryModel.getId())
                 .map(newCategory -> {
-                    newCategory.setPackageId(categoryModel.getPackageId());
+                    newCategory.setPackageId(packageService.getPackageById(categoryModel.getPackageId()));
                     newCategory.setTitle(categoryModel.getTitle());
                     return categoryRepository.save(newCategory);
                 })
@@ -59,11 +63,26 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(Long id) {
         taskService.deleteTaskByCategoryId(id);
-        categoryRepository.deleteById(id);
+        categoryRepository.deleteByCategoryId(id);
     }
 
     @Override
     public void deleteCategoryByPackageId(Long packageId) {
         categoryRepository.deleteCategoryByPackageId(packageId);
+    }
+
+    @Override
+    public Page<CategoryModel> getAllByPackageId(Long id, Pageable pageable) {
+        return categoryRepository.findAllCategoriesByPackageId(id, pageable);
+    }
+
+    @Override
+    public List<CategoryModel> getAllByPackageId(Long id) {
+        return categoryRepository.findAllCategoriesByPackageId(id);
+    }
+
+    @Override
+    public Category saveCategory(Category category) {
+        return categoryRepository.save(category);
     }
 }

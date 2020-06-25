@@ -26,6 +26,6 @@ public interface UserService extends UserDetailsService {
 
 
 
-    List<User> getByRole(String name);
+    List<UserModel> getByRole(String name);
 
 }

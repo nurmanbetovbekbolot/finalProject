@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getByRole(String name) {
+    public List<UserModel> getByRole(String name) {
         return userRepository.getByRole(name);
     }
 

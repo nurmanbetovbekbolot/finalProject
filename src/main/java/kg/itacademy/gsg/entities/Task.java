@@ -5,9 +5,11 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,9 +34,6 @@ public class Task {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     Status status;
-//
-//    @Column(name = "image", columnDefinition = "text")
-//    private String image;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -43,4 +42,11 @@ public class Task {
     @CreationTimestamp
     @Column(name = "created_date")
     Date createdDate;
+
+    public Task(String title, String description, Status status, Category categoryId) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.categoryId = categoryId;
+    }
 }

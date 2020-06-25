@@ -13,13 +13,11 @@
                         Список услуг</h3>
 
                 </div>
-
-                <div class="col-lg-1">
-                    <button type="button" class="btn btn-link">
-                        <span class="iconify" data-inline="false"
-                              data-icon="si-glyph:basket-plus"
+                <div th:if="${packageId}" class="col-lg-1">
+                    <a th:href="@{'/category/form/' + ${packageId}}">
+                        <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
                               style="color: #2b3b55;font-size: 40px;"></span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -46,7 +44,8 @@
                                         <span class="iconify centered" data-inline="false"
                                               data-icon="dashicons:arrow-down-alt2"
                                               style="color: #2b3b55; font-size:25px; margin-top: -10px"></span></a>
-                                    <button th:if="${category.getId() != category.title}" type="button" style="color: white;"
+                                    <button type="button"
+                                            style="color: white;"
                                             class="btn btn-link" data-toggle="modal"
                                             th:attr="data-target='#recordDeleteModal'+${category.id}">
                                     <span class="iconify" data-inline="false"
@@ -73,8 +72,7 @@
                                                     <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Нет
                                                     </button>
-                                                    <form th:action="@{/category/delete/{id}(id = ${category.id})}"
-                                                          method="post">
+                                                    <form th:action="${packageId} ? '/category/delete/'+${category.id}+'?packageId='+${packageId} : '/category/delete/'+${category.id}" method="post">
                                                         <button type="submit" class="btn btn-info m-t-10">Да</button>
                                                     </form>
                                                 </div>
@@ -100,6 +98,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
         <br><br>

@@ -15,5 +15,5 @@ import lombok.experimental.FieldDefaults;
 public class CategoryModel {
     Long id;
     String title;
-    Package packageId;
+    Long packageId;
 }

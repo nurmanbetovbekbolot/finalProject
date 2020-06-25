@@ -18,6 +18,12 @@ public interface TaskService {
 
     Task saveTask(TaskModel taskModel);
 
+    Task saveTask(Task task);
+
+    List<TaskModel> findAllByCategoryId(Long id);
+
+    Page<TaskModel> findAllByCategoryId(Long id, Pageable pageable);
+
     void deleteTaskById(Long id);
 
     void deleteTaskByPackageId(Long id);

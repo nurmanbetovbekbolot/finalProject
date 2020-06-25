@@ -58,6 +58,8 @@ html {
     font-size: 16px;
 }
 
+
+
 .form .message a {
     color: #2B3B55;
     text-decoration: none;
@@ -316,10 +318,6 @@ ul.breadcrumb li a:hover {
 #sidebar .nav a i {
     font-family: "Gilroy Light";
     margin-right: 16px;
-}
-
-footer img {
-    width: 15%;
 }
 
 .nav1 li {
