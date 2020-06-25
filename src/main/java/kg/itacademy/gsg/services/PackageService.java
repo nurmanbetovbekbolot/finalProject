@@ -18,8 +18,6 @@ public interface PackageService {
 
     Page<CategoryModel> getAllCategoriesByPackageId(Long id, Pageable pageable);
 
-    List<PackageModel> findAllPackagesNotInOrder();
-
     Package savePackage(Package p);
 
     Package getPackageById(Long id);

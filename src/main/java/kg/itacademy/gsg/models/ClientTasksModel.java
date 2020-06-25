@@ -1,8 +1,10 @@
 package kg.itacademy.gsg.models;
 
+import kg.itacademy.gsg.entities.Order;
+import kg.itacademy.gsg.entities.Task;
+import kg.itacademy.gsg.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 
 @Getter
 @Setter
@@ -11,8 +13,10 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryModel {
+public class ClientTasksModel {
     Long id;
-    String title;
-    Long packageId;
+    User client;
+    User manager;
+    Order order;
+    Task task;
 }

@@ -56,12 +56,6 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public List<PackageModel> findAllPackagesNotInOrder() {
-        return packageRepository.findAllPackagesNotInOrder();
-    }
-
-
-    @Override
     public Package updatePackage(PackageModel packageModel) {
         return packageRepository.findById(packageModel.getId())
                 .map(newPackage -> {

@@ -1,6 +1,9 @@
 package kg.itacademy.gsg.repositories;
 
+import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.entities.Task;
+import kg.itacademy.gsg.entities.User;
 import kg.itacademy.gsg.models.TaskModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,5 +37,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(value = "delete FROM gsg_tasks WHERE  category_id =:category_id", nativeQuery = true)
     void deleteTaskByCategoryId(@Param("category_id") Long id);
 
-
+    @Query("select new kg.itacademy.gsg.models.TaskModel(t.id,t.title,t.description,t.status,t.categoryId,t.createdDate) FROM Task t join ClientTasks ct on ct.task.id = t.id where ct.client.id = :clientId and ct.order.id = :orderId")
+    List<TaskModel> getAllByClientAndOrder(@Param("clientId") Long clientId, @Param("orderId") Long orderId);
 }

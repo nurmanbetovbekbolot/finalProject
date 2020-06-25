@@ -29,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll();
     }
 
+
     @Override
     public Category saveCategory(CategoryModel categoryModel) {
         Category category = new Category();

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-11">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Список услуг и задач</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="accordion md-accordion" th:id="'accordionEx'+${clientTask.id}" role="tablist"
+                 aria-multiselectable="true"
+                 th:each="clientTask : ${clientTaskList}">
+                <div class="card card_acc">
+                    <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
+                         th:id="'headingOne'+${clientTask.id}">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <h5 class="mb-0" style="color: #2b3b55;font-family: 'Gilroy Light'"
+                                    th:text="${clientTask.title}">
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:id="'collapseOne'+${clientTask.id}" class="collapse show card" role="tabpanel"
+                         th:attr="data-parent='#accordionEx'+${clientTask.id}"
+                         aria-labelledby="headingOne1" th:each="task : ${clientTask.taskModels}">
+                        <div class="card-body">
+                            <p class="card-text" th:text="${task.title+' '+task.description}">Описание</p>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+        </div>
+        <br><br>
+
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${clientTaskList.hasPrevious()}">
+                    <a class="page-link" th:href="@{clientTasks(page=${clientTaskList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, clientTaskList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${clientTaskList.number == i}">
+                        <a th:href="@{clientTasks(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${clientTaskList.number == i}">
+
+                        <a th:href="@{clientTasks(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${clientTaskList.hasNext()}">
+                    <a class="page-link" th:href="@{clientTasks(page=${clientTaskList.number+1})}"> > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>

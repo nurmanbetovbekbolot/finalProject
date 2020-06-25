@@ -94,7 +94,7 @@
                                 <a style="color: #2B3B55" th:href="'/user/'+ ${order.managerId.id}" th:text="${'Менеджер: '+order.managerId.firstName+' '+order.managerId.lastName}"></a>
                             </h5>
                             <h5 class="card-title">
-                                <a style="color: #2B3B55" th:href="'/package/'+ ${order.packageId.id}" th:text="${'Пакет: '+order.packageId.title}"></a>
+                                <a style="color: #2B3B55" th:href="'/order/'+ ${order.id} + '/clientTasks'" th:text="${'Пакет: '+order.packageId.title}"></a>
                             </h5>
                             <h5 class="card-title" style="color: #2B3B55">
                                 <a style="color: #2B3B55; text-decoration: none;" href="" th:text="${'Время создания: '+ #dates.format(order.createdDate, 'dd-MM-yyyy')}"></a>

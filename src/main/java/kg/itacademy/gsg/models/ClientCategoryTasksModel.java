@@ -3,6 +3,7 @@ package kg.itacademy.gsg.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,8 +12,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryModel {
+public class ClientCategoryTasksModel{
     Long id;
     String title;
-    Long packageId;
+    List<TaskModel> taskModels;
 }

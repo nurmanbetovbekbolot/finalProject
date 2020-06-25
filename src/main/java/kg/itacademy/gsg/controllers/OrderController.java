@@ -2,10 +2,7 @@ package kg.itacademy.gsg.controllers;
 
 import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.entities.User;
-import kg.itacademy.gsg.models.OrderCreationModel;
-import kg.itacademy.gsg.models.OrderModel;
-import kg.itacademy.gsg.models.PackageModel;
-import kg.itacademy.gsg.models.UserModel;
+import kg.itacademy.gsg.models.*;
 import kg.itacademy.gsg.services.OrderService;
 import kg.itacademy.gsg.services.PackageService;
 import kg.itacademy.gsg.services.UserService;
@@ -63,11 +60,21 @@ public class OrderController {
         return "admin/order_form";
     }
 
+    @GetMapping(value = "/{id}/clientTasks")
+    public String getClientTasks(@PathVariable("id") Long id, Pageable pageable, Model model) {
+        Order o = orderService.getOrderById(id);
+        Page<ClientCategoryTasksModel> clientCategoryTasksModels = orderService.getClientCategoryTasks(o, pageable);
+        model.addAttribute("add",true);
+        model.addAttribute("order", o);
+        model.addAttribute("clientTaskList", clientCategoryTasksModels);
+        return "admin/list_of_clientTask";
+    }
+
     @GetMapping(value = "/form")
     public String getCreateOrderForm(Model model, Authentication authentication) {
         getUserInfo(authentication);
         List<UserModel> userList = userService.getByRole("ROLE_USER");
-        List<PackageModel> packageList = packageService.findAllPackagesNotInOrder();
+        List<PackageModel> packageList = packageService.getAll();
         model.addAttribute("userList", userList);
         model.addAttribute("packageList", packageList);
         model.addAttribute("add", true);

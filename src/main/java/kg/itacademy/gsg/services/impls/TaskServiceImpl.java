@@ -1,6 +1,9 @@
 package kg.itacademy.gsg.services.impls;
 
+import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.entities.Task;
+import kg.itacademy.gsg.entities.User;
 import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.TaskModel;
@@ -86,5 +89,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTaskByCategoryId(Long id) {
         taskRepository.deleteTaskByCategoryId(id);
+    }
+
+    @Override
+    public List<TaskModel> getAllByClientAndOrder(Order order) {
+        return taskRepository.getAllByClientAndOrder(order.getClientId().getId(), order.getId());
     }
 }

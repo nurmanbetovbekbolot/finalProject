@@ -18,7 +18,4 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
 
     @Query("select new kg.itacademy.gsg.models.PackageModel(p.id,p.title,p.description) FROM Package p ORDER BY p.title ASC")
     List<PackageModel> getAll();
-
-    @Query("select new kg.itacademy.gsg.models.PackageModel(p.id,p.title,p.description) FROM Package p LEFT JOIN  Order o on p.id = o.packageId.id where o.id is NULL ORDER BY p.title ASC")
-    List<PackageModel> findAllPackagesNotInOrder();
 }

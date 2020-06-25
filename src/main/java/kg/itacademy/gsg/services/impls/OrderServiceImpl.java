@@ -3,17 +3,16 @@ package kg.itacademy.gsg.services.impls;
 import kg.itacademy.gsg.entities.*;
 import kg.itacademy.gsg.entities.Package;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
-import kg.itacademy.gsg.models.CategoryModel;
-import kg.itacademy.gsg.models.OrderCreationModel;
-import kg.itacademy.gsg.models.OrderModel;
-import kg.itacademy.gsg.models.TaskModel;
+import kg.itacademy.gsg.models.*;
 import kg.itacademy.gsg.repositories.OrderRepository;
 import kg.itacademy.gsg.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     TaskServiceImpl taskService;
+
+    @Autowired
+    ClientTasksServiceImpl clientTasksService;
 
     @Autowired
     OrderRepository orderRepository;
@@ -66,29 +68,44 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order saveOrder(OrderCreationModel orderCreationModel) {
-        Order order = new Order();
+        Order newOrder = new Order();
         Package pFromDB = packageService.getPackageById(orderCreationModel.getPackageId());
         User user = userService.getUserById(orderCreationModel.getClientId());
+        User manager = userService.getUserById(orderCreationModel.getManagerId());
+        newOrder.setPackageId(pFromDB);
+        newOrder.setClientId(user);
+        newOrder.setManagerId(userService.getUserById(orderCreationModel.getManagerId()));
+        newOrder.setTitle(orderCreationModel.getTitle());
         List<CategoryModel> categoryModelList = categoryService.getAllByPackageId(pFromDB.getId());
-        Package p = new Package(pFromDB.getTitle()+ " для "+user.getFirstName()+" "+user.getLastName(),pFromDB.getDescription());
-        packageService.savePackage(p);
-
+        Order orderSave = orderRepository.save(newOrder);
         for(CategoryModel catModel : categoryModelList){
-            Category category = new Category(catModel.getTitle(), p);
-            categoryService.saveCategory(category);
             List<TaskModel> taskModelList = taskService.findAllByCategoryId(catModel.getId());
             for (TaskModel taskModel : taskModelList){
-                Task task = new Task(taskModel.getTitle(), taskModel.getDescription(), taskModel.getStatus(), category);
+                Task task = new Task(taskModel.getTitle(), taskModel.getDescription(), taskModel.getStatus(), categoryService.getCategoryById(catModel.getId()));
                 taskService.saveTask(task);
+                ClientTasks clientTasks = new ClientTasks();
+                clientTasks.setClient(user);
+                clientTasks.setTask(task);
+                clientTasks.setManager(manager);
+                clientTasks.setOrder(orderSave);
+                clientTasksService.save(clientTasks);
             }
         }
+        return orderSave;
+    }
 
-        order.setTitle(orderCreationModel.getTitle());
-        order.setClientId(userService.getUserById(orderCreationModel.getClientId()));
-        order.setManagerId(userService.getUserById(orderCreationModel.getManagerId()));
-        order.setPackageId(p);
-
-        return orderRepository.save(order);
+    @Override
+    public Page<ClientCategoryTasksModel> getClientCategoryTasks(Order order, Pageable pageable) {
+        List<CategoryModel> categoryModelList = categoryService.getAllByPackageId(order.getPackageId().getId());
+        List<ClientCategoryTasksModel> clientCategoryTasksModelsList = new ArrayList<>();
+        for(CategoryModel category : categoryModelList){
+            ClientCategoryTasksModel clientCategoryTasksModel = new ClientCategoryTasksModel();
+            clientCategoryTasksModel.setId(category.getId());
+            clientCategoryTasksModel.setTitle(category.getTitle());
+            clientCategoryTasksModel.setTaskModels(taskService.getAllByClientAndOrder(order));
+            clientCategoryTasksModelsList.add(clientCategoryTasksModel);
+        }
+        return new PageImpl<>(clientCategoryTasksModelsList);
     }
 
     @Override

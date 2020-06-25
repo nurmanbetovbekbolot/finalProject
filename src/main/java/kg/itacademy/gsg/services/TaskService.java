@@ -1,6 +1,9 @@
 package kg.itacademy.gsg.services;
 
+import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.entities.Task;
+import kg.itacademy.gsg.entities.User;
 import kg.itacademy.gsg.models.TaskModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,4 +32,6 @@ public interface TaskService {
     void deleteTaskByPackageId(Long id);
 
     void deleteTaskByCategoryId(Long id);
+
+    List<TaskModel> getAllByClientAndOrder(Order order);
 }

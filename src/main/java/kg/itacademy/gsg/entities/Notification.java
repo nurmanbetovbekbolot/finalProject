@@ -3,7 +3,6 @@ package kg.itacademy.gsg.entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,7 +16,6 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "gsg_notifications")
 public class Notification {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
