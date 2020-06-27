@@ -20,46 +20,41 @@
             <div class="card-deck">
                 <div class="card card1" th:each="task : ${taskList}">
                     <div class="card-title border-bottom centered" th:text="${task.title}">
-                        <!--                            <span class="iconify" data-inline="false"-->
-                        <!--                                  data-icon="et:profile-male"-->
-                        <!--                                  style="font-size: 30px; color: #2b3b55;"></span> Asan Asanov-->
                     </div>
 
-<!--                    <div class="view overlay photo text-center">-->
-<!--                        <img class="card-img-top" th:src="${task.image}"-->
-<!--                             alt="Card image cap">-->
-<!--                    </div>-->
                     <div class="card-body">
                         <h5 class="card-title centered" th:text="${task.description}">
                         </h5>
 
                     </div>
-                    <p class="centered">Статус:
-                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="font-size: 25px;color: darkorange; "></span>
-                        </button>
-                    </p>
+<!--                    <p class="centered">Статус:-->
+<!--                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"-->
+<!--                                                                         data-icon="uil:process"-->
+<!--                                                                         style="font-size: 25px;color: darkorange; "></span>-->
+<!--                        </button>-->
+<!--                    </p>-->
+                    <p class="centered">Редактировать:
                     <a th:href="'/task/'+${task.id}"
                        title="Список услуг этого пакета" class="btn btn-link">
                                         <span class="iconify"
-                                              data-icon="ant-design:unordered-list-outlined"
+                                              data-icon="fa-solid:edit"
                                               data-inline="false"
                                               style="color: #2b3b55;font-size:25px;">
                                         </span>
                     </a>
-                    <p class="centered">
-                        <button type="button" class="btn btn-link">
-
-                            <span class="iconify i1" data-inline="false"
-                                                                         data-icon="uil:process"
-                                                                         style="color: darkorange;font-size: 30px;"></span>
-                        </button>
-                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"
-                                                                         data-icon="ic:outline-done"
-                                                                         style="color: green;font-size: 30px;"></span>
-                        </button>
                     </p>
+<!--                    <p class="centered">-->
+<!--                        <button type="button" class="btn btn-link">-->
+
+<!--                            <span class="iconify i1" data-inline="false"-->
+<!--                                  data-icon="uil:process"-->
+<!--                                  style="color: darkorange;font-size: 30px;"></span>-->
+<!--                        </button>-->
+<!--                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"-->
+<!--                                                                         data-icon="ic:outline-done"-->
+<!--                                                                         style="color: green;font-size: 30px;"></span>-->
+<!--                        </button>-->
+<!--                    </p>-->
                 </div>
             </div>
             <br>

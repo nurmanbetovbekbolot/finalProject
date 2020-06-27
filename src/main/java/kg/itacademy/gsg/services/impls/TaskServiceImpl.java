@@ -44,6 +44,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findAllTasksByCatId(Long id) {
+        return taskRepository.findAllTasksByCatId(id);
+    }
+
+    @Override
     public List<TaskModel> findAllByCategoryId(Long id) {
         return taskRepository.findAllByCategoryId(id);
     }
@@ -54,7 +59,6 @@ public class TaskServiceImpl implements TaskService {
                 .map(newTask -> {
                     newTask.setTitle(taskModel.getTitle());
                     newTask.setDescription(taskModel.getDescription());
-                    newTask.setStatus(taskModel.getStatus());
                     return taskRepository.save(newTask);
                 })
                 .orElseThrow(() -> new RecordNotFoundException("Task not found with id:" + taskModel.getId()));
@@ -66,7 +70,6 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(taskModel.getTitle());
         task.setDescription(taskModel.getDescription());
         task.setCategoryId(taskModel.getCategoryId());
-        task.setStatus(Status.TODO);
         task.setCreatedDate(taskModel.getCreatedDate());
         return taskRepository.save(task);
     }

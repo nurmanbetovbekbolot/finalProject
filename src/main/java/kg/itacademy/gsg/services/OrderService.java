@@ -4,6 +4,7 @@ import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.models.ClientCategoryTasksModel;
 import kg.itacademy.gsg.models.OrderCreationModel;
 import kg.itacademy.gsg.models.OrderModel;
+import kg.itacademy.gsg.models.TaskModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,8 +26,10 @@ public interface OrderService {
 
     void deleteOrderById(Long orderId);
 
-    Page<OrderModel> findAllByName(String toLowerCase, Pageable pageable);
+    Page<OrderModel> findAllOrdersByClientId(Long id, Pageable pageable);
 
-    Page<OrderModel> findAllByDate(Date dateFrom, Date dateTo, Pageable pageable);
+    Page<OrderModel> findAllOrdersByName(String toLowerCase, Pageable pageable);
+
+    Page<OrderModel> findAllOrdersByDate(Date dateFrom, Date dateTo, Pageable pageable);
 
 }

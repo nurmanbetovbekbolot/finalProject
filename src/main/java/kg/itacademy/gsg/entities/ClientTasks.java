@@ -1,5 +1,6 @@
 package kg.itacademy.gsg.entities;
 
+import kg.itacademy.gsg.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,19 +20,44 @@ public class ClientTasks {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "client_id")
     User client;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "manager_id")
     User manager;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "order_id")
     Order order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "task_id")
     Task task;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_manager")
+    Status statusManager;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_client")
+    Status statusClient;
+
+    public ClientTasks(User client, User manager, Order order, Task task, Status statusManager) {
+        this.client = client;
+        this.manager = manager;
+        this.order = order;
+        this.task = task;
+        this.statusManager = statusManager;
+    }
+
+    public ClientTasks(User client, User manager, Order order, Task task, Status statusManager, Status statusClient) {
+        this.client = client;
+        this.manager = manager;
+        this.order = order;
+        this.task = task;
+        this.statusManager = statusManager;
+        this.statusClient = statusClient;
+    }
 }

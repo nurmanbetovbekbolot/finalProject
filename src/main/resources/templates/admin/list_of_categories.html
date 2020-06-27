@@ -30,12 +30,12 @@
                     <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
                          th:id="'headingOne'+${category.id}">
                         <div class="row">
-                            <div class="col-lg-11">
+                            <div class="col-lg-10">
                                 <h5 class="mb-0" style="color: #2b3b55;font-family: 'Gilroy Light'"
                                     th:text="${category.title}">
                                 </h5>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-2">
                                 <div class="row">
                                     <a data-toggle="collapse" th:attr="data-parent='#accordionEx'+${category.id}"
                                        th:href="'#collapseOne'+${category.id}"
@@ -44,6 +44,12 @@
                                         <span class="iconify centered" data-inline="false"
                                               data-icon="dashicons:arrow-down-alt2"
                                               style="color: #2b3b55; font-size:25px; margin-top: -10px"></span></a>
+                                    <a th:href="'/category/' + ${category.id}" type="button" style="color: white;"
+                                       class="btn btn-link">
+                                        <span class="iconify" data-icon="fa-solid:edit"
+                                              style="color: #2b3b55;font-size:25px;"></span>
+                                        <!--                                    Обновить-->
+                                    </a>
                                     <button type="button"
                                             style="color: white;"
                                             class="btn btn-link" data-toggle="modal"
@@ -72,7 +78,8 @@
                                                     <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Нет
                                                     </button>
-                                                    <form th:action="${packageId} ? '/category/delete/'+${category.id}+'?packageId='+${packageId} : '/category/delete/'+${category.id}" method="post">
+                                                    <form th:action="${packageId} ? '/category/delete/'+${category.id}+'?packageId='+${packageId} : '/category/delete/'+${category.id}"
+                                                          method="post">
                                                         <button type="submit" class="btn btn-info m-t-10">Да</button>
                                                     </form>
                                                 </div>

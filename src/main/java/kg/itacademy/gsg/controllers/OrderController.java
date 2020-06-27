@@ -40,9 +40,9 @@ public class OrderController {
     public String getOrderList(@RequestParam(value = "search", required = false) String search, @Param("dateFrom") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFrom, @Param("dateTo") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo, @PageableDefault(3) Pageable pageable, Model model) {
         Page<OrderModel> orderList;
         if (search != null) {
-            orderList = orderService.findAllByName(search.toLowerCase(), pageable);
+            orderList = orderService.findAllOrdersByName(search.toLowerCase(), pageable);
         } else if (dateFrom != null && dateTo != null) {
-            orderList= orderService.findAllByDate(dateFrom,dateTo,pageable);
+            orderList= orderService.findAllOrdersByDate(dateFrom,dateTo,pageable);
         } else {
             orderList = orderService.findAll(pageable);
         }
@@ -61,7 +61,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{id}/clientTasks")
-    public String getClientTasks(@PathVariable("id") Long id, Pageable pageable, Model model) {
+    public String getClientTasks(@PathVariable("id") Long id, @PageableDefault(1) Pageable pageable, Model model) {
         Order o = orderService.getOrderById(id);
         Page<ClientCategoryTasksModel> clientCategoryTasksModels = orderService.getClientCategoryTasks(o, pageable);
         model.addAttribute("add",true);

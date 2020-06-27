@@ -23,7 +23,7 @@ public class MediaFile {
     @Column(name = "file")
     String file;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)
     Task task;
 

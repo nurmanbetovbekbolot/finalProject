@@ -1,6 +1,7 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.CategoryModel;
 import kg.itacademy.gsg.repositories.CategoryRepository;
@@ -53,7 +54,6 @@ public class CategoryServiceImpl implements CategoryService {
     public Category updateCategory(CategoryModel categoryModel) {
         return categoryRepository.findById(categoryModel.getId())
                 .map(newCategory -> {
-                    newCategory.setPackageId(packageService.getPackageById(categoryModel.getPackageId()));
                     newCategory.setTitle(categoryModel.getTitle());
                     return categoryRepository.save(newCategory);
                 })
@@ -75,6 +75,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Page<CategoryModel> getAllByPackageId(Long id, Pageable pageable) {
         return categoryRepository.findAllCategoriesByPackageId(id, pageable);
+    }
+
+    @Override
+    public List<CategoryModel> getAllByOrderAndClient(Order order) {
+        return categoryRepository.getAllByOrderAndClient(order.getClientId().getId(), order.getId());
     }
 
     @Override

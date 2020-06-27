@@ -34,15 +34,6 @@
                                     th:text="${user.firstName+' '+user.lastName}">
                                 </h5>
                             </div>
-                            <!--                            <div class="col-lg-1">-->
-                            <!--                                <div class="row">-->
-                            <!--                                    <a th:href="'/user/' + ${user.id}">-->
-                            <!--                                    <span class="iconify" data-icon="fa-solid:edit"-->
-                            <!--                                          data-inline="false" style="color: #2b3b55;font-size:25px;"></span>-->
-                            <!--                                        &lt;!&ndash;                                    Обновить&ndash;&gt;-->
-                            <!--                                    </a>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                             <div class="col-lg-2">
                                 <div class="row">
                                     <a data-toggle="collapse" th:attr="data-parent='#accordionEx'+${user.id}"
@@ -55,11 +46,11 @@
                                         ></span></a>
 
                                     <a th:href="'/user/' + ${user.id}" type="button" style="color: white;"
-                                       class="btn btn-link">
+                                           class="btn btn-link">
                                         <span class="iconify" data-icon="fa-solid:edit"
                                               style="color: #2b3b55;font-size:25px;"></span>
-                                            <!--                                    Обновить-->
-                                    </a>
+                                    <!--                                    Обновить-->
+                                </a>
 
                                     <button th:if="${userName != user.email}" type="button" style="color: white;"
                                             class="btn btn-link" data-toggle="modal"
@@ -130,7 +121,6 @@
                         <a th:href="@{/user/list(page=${i})}" class="page-link ">[[${i}+1]]</a>
                     </li>
                     <li class="page-item" th:unless="${userList.number == i}">
-
                         <a th:href="@{/user/list(page=${i})}" class="page-link">[[${i}+1]]</a>
                     </li>
                 </th:block>

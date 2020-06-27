@@ -4,4 +4,7 @@ public enum Status {
     TODO,
     INPROGRESS,
     DONE,
+    ACCEPTED,
+    DECLINED,
+    REWORK
 }

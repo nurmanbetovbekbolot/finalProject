@@ -1,6 +1,7 @@
 package kg.itacademy.gsg.services;
 
 import kg.itacademy.gsg.entities.Category;
+import kg.itacademy.gsg.entities.Order;
 import kg.itacademy.gsg.models.CategoryModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,4 +28,6 @@ public interface CategoryService {
     void deleteCategoryByPackageId(Long packageId);
 
     Page<CategoryModel> getAllByPackageId(Long id, Pageable pageable);
+
+    List<CategoryModel> getAllByOrderAndClient(Order order);
 }

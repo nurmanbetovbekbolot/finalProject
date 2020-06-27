@@ -38,7 +38,7 @@
             <div class="form-group">
                 <label for="passwordInput">Пароль</label>
                 <input type="password" name="password" class="form-control" id="passwordInput"
-                       aria-describedby="passwordHelp" placeholder="Введите пароль" minlength="8" maxlength="20"
+                       aria-describedby="passwordHelp" placeholder="Введите пароль" minlength="3" maxlength="20"
                        th:required="${add} ? 'required' : null">
             </div>
             <div th:if="${add}" class="form-group">

@@ -21,10 +21,6 @@
                 <label for="orderNameInput">Название заказа</label>
                 <input th:value="${add} ? '' : ${order.title}" type="text" name="title" class="form-control" id="orderNameInput" placeholder="Введите название" minlength="2" maxlength="50" required>
             </div>
-<!--            <div class="form-group">-->
-<!--                <label for="orderClientIdInput">Клиент</label>-->
-<!--                <input th:value="${add} ? '' : ${order.clientId.firstName}" type="text" name="clientId" class="form-control" id="orderClientIdInput" placeholder="Введите данные" minlength="2" maxlength="500" required>-->
-<!--            </div>-->
             <div th:if="${add}" class="form-group">
                 <label class="text-danger font-bold" for="input-select1">Выбрать клиента</label>
                 <select name="clientId" class="form-control" id="input-select1">
@@ -38,12 +34,7 @@
                     <option th:each="package : ${packageList}" th:value="${package.id}" th:text="${'Название пакета: '+package.title}"></option>
                 </select>
             </div>
-<!--            <div class="form-group">-->
-<!--                <label for="orderPackageIdInput">Пакет</label>-->
-<!--                <input th:value="${add} ? '' : ${order.packageId.title}" type="text" name="packageId" class="form-control" id="orderPackageIdInput" placeholder="Введите данные" minlength="2" maxlength="500" required>-->
-<!--            </div>-->
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Отправить</button>
         </form>
     </div>
 </layout:html>

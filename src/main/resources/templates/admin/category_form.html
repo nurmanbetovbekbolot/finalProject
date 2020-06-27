@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif" th:text="${add} ? 'Добавить услугу' : 'Редактировать услугу'">
                     <span class="iconify"
                           data-inline="false"
                           data-icon="gridicons:list-ordered"
@@ -19,9 +19,9 @@
         <form action="#" th:action="${add} ? '/category/create/'+${packageId} : '/category/update/' + ${category.id}" method="post">
             <div class="form-group">
                 <label for="packageNameInput">Название услуги</label>
-                <input th:value="${add} ? '' : ${category.title}" type="text" name="title" class="form-control" id="packageNameInput" placeholder="Введите название" minlength="5" maxlength="50" required>
+                <input th:value="${add} ? '' : ${category.title}" type="text" name="title" class="form-control" id="packageNameInput" placeholder="Введите название" minlength="2" maxlength="50" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Отправить</button>
         </form>
     </div>
 </layout:html>

@@ -18,7 +18,6 @@ public class TaskModel {
     Long id;
     String title;
     String description;
-    Status status;
     Category categoryId;
     Date createdDate;
 }

@@ -31,11 +31,7 @@ public class Task {
     @Column(name = "description",columnDefinition = "text")
     String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    Status status;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id")
     Category categoryId;
 
@@ -43,10 +39,9 @@ public class Task {
     @Column(name = "created_date")
     Date createdDate;
 
-    public Task(String title, String description, Status status, Category categoryId) {
+    public Task(String title, String description,Category categoryId) {
         this.title = title;
         this.description = description;
-        this.status = status;
         this.categoryId = categoryId;
     }
 }

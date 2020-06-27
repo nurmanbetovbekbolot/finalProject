@@ -23,7 +23,7 @@ public class Category {
     @Column(name = "title")
     String title;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "package_id")
     Package packageId;
 

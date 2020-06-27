@@ -25,11 +25,11 @@ public class Comment {
     @Column(name = "comment_text",columnDefinition = "text")
     String commentText;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)
     Task task;
 

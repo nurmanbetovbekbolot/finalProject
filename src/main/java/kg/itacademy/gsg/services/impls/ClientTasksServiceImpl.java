@@ -1,10 +1,14 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.ClientTasks;
+import kg.itacademy.gsg.enums.Status;
+import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.ClientTasksModel;
 import kg.itacademy.gsg.repositories.ClientTasksRepository;
 import kg.itacademy.gsg.services.ClientTasksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,7 @@ public class ClientTasksServiceImpl implements ClientTasksService {
 
     @Override
     public List<ClientTasksModel> getAll() {
-        return clientTasksRepository.findAllClientTasksModels();
+        return clientTasksRepository.findAllClientTasks();
     }
 
     @Override
@@ -28,12 +32,25 @@ public class ClientTasksServiceImpl implements ClientTasksService {
     }
 
     @Override
+    public ClientTasks updateClientTask(ClientTasksModel clientTasksModel) {
+        return clientTasksRepository.findById(clientTasksModel.getId())
+                .map(newClientTaskModel -> {
+                    newClientTaskModel.setStatusClient(clientTasksModel.getStatusClient());
+                    newClientTaskModel.setStatusManager(clientTasksModel.getStatusManager());
+                    return clientTasksRepository.save(newClientTaskModel);
+                })
+                .orElseThrow(() -> new RecordNotFoundException("Task not found with id:" + clientTasksModel.getId()));
+    }
+
+
+    @Override
     public ClientTasks save(ClientTasksModel clientTasksModel) {
         ClientTasks clientTasks = new ClientTasks();
         clientTasks.setTask(clientTasksModel.getTask());
         clientTasks.setClient(clientTasksModel.getClient());
         clientTasks.setOrder(clientTasksModel.getOrder());
-        clientTasks.setClient(clientTasksModel.getManager());
+        clientTasks.setManager(clientTasksModel.getManager());
+        clientTasks.setStatusClient(Status.TODO);
         return clientTasksRepository.save(clientTasks);
     }
 
@@ -41,6 +58,16 @@ public class ClientTasksServiceImpl implements ClientTasksService {
     public ClientTasks save(ClientTasks clientTasks) {
         return clientTasksRepository.save(clientTasks);
     }
+
+//    @Override
+//    public Page<ClientTasksModel> findAllClientTasksByStatus(Status status, Pageable pageable) {
+//        return clientTasksRepository.findAllClientTasksByStatus(status,pageable);
+//    }
+
+//    @Override
+//    public Page<ClientTasksModel> findAllClientTasksByClientId(Long id, Pageable pageable) {
+//        return clientTasksRepository.findAllClientTasksByClientId(id, pageable);
+//    }
 
     @Override
     public void deleteById(Long id) {

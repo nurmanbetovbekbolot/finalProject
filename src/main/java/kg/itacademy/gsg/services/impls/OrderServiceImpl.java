@@ -79,10 +79,10 @@ public class OrderServiceImpl implements OrderService {
         List<CategoryModel> categoryModelList = categoryService.getAllByPackageId(pFromDB.getId());
         Order orderSave = orderRepository.save(newOrder);
         for(CategoryModel catModel : categoryModelList){
-            List<TaskModel> taskModelList = taskService.findAllByCategoryId(catModel.getId());
-            for (TaskModel taskModel : taskModelList){
-                Task task = new Task(taskModel.getTitle(), taskModel.getDescription(), taskModel.getStatus(), categoryService.getCategoryById(catModel.getId()));
-                taskService.saveTask(task);
+            List<Task> taskList = taskService.findAllTasksByCatId(catModel.getId());
+            for (Task task : taskList){
+//                Task task = new Task(taskModel.getTitle(), taskModel.getDescription(), taskModel.getStatus(), categoryService.getCategoryById(catModel.getId()));
+//                taskService.saveTask(task);
                 ClientTasks clientTasks = new ClientTasks();
                 clientTasks.setClient(user);
                 clientTasks.setTask(task);
@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<ClientCategoryTasksModel> getClientCategoryTasks(Order order, Pageable pageable) {
-        List<CategoryModel> categoryModelList = categoryService.getAllByPackageId(order.getPackageId().getId());
+        List<CategoryModel> categoryModelList = categoryService.getAllByOrderAndClient(order);
         List<ClientCategoryTasksModel> clientCategoryTasksModelsList = new ArrayList<>();
         for(CategoryModel category : categoryModelList){
             ClientCategoryTasksModel clientCategoryTasksModel = new ClientCategoryTasksModel();
@@ -114,12 +114,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderModel> findAllByName(String toLowerCase, Pageable pageable) {
-        return orderRepository.findAllByName(toLowerCase, pageable);
+    public Page<OrderModel> findAllOrdersByClientId(Long id, Pageable pageable) {
+        return orderRepository.findAllOrdersByClientId(id, pageable);
     }
 
     @Override
-    public Page<OrderModel> findAllByDate(Date dateFrom, Date dateTo, Pageable pageable) {
-        return orderRepository.findAllByDate(dateFrom,dateTo,pageable);
+    public Page<OrderModel> findAllOrdersByName(String toLowerCase, Pageable pageable) {
+        return orderRepository.findAllOrdersByName(toLowerCase, pageable);
+    }
+
+    @Override
+    public Page<OrderModel> findAllOrdersByDate(Date dateFrom, Date dateTo, Pageable pageable) {
+        return orderRepository.findAllOrdersByDate(dateFrom,dateTo,pageable);
     }
 }

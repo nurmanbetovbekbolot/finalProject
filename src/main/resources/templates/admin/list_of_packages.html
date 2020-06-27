@@ -47,6 +47,14 @@
                                               style="color: #2b3b55; font-size:25px; margin-top: -10px">
                                         </span>
                                     </a>
+
+                                    <a th:href="'/package/' + ${p.id}" type="button" style="color: white;"
+                                       class="btn btn-link">
+                                        <span class="iconify" data-icon="fa-solid:edit"
+                                              style="color: #2b3b55;font-size:25px;"></span>
+                                        <!--                                    Обновить-->
+                                    </a>
+
                                     <a th:href="'/package/'+${p.id}+'/category/list'"
                                        title="Список услуг этого пакета" class="btn btn-link">
                                         <span class="iconify"
