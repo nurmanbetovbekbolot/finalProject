@@ -2,7 +2,7 @@
 <layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
              layout:decorate="~{layout}">
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container" style="padding-top: 50px">
             <div class="row">
                 <div class="col-lg-11">
                     <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif; color: #2b3b55">
@@ -28,7 +28,7 @@
                  aria-multiselectable="true"
                  th:each="p : ${packageList}">
                 <div class="card card_acc">
-                    <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
+                    <div style="outline:2px solid #2b3b55; background: #CDD3DC" class="card-header c-h" role="tab"
                          th:id="'headingOne'+${p.id}">
                         <div class="row">
                             <div class="col-lg-10">

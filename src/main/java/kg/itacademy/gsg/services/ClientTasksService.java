@@ -15,14 +15,17 @@ public interface ClientTasksService {
 
     ClientTasks updateClientTask(ClientTasksModel clientTasksModel);
 
-
     ClientTasks save(ClientTasksModel clientTasksModel);
 
     ClientTasks save(ClientTasks clientTasks);
 
-//    Page<ClientTasksModel> findAllClientTasksByClientId(Long id, Pageable pageable);
+    Page<ClientTasksModel> findAllClientTasksByOrderId(Long id, Pageable pageable);
 
-//    Page<ClientTasksModel> findAllClientTasksByStatus(Status status, Pageable pageable);
+    Page<ClientTasksModel> findAllClientTasksByStatus(Status status, Pageable pageable);
+
+    ClientTasks changeClientTasksStatus(Long id, Status status, String userRole);
+
+    ClientTasksModel findClientTaskById(Long id);
 
     void deleteById(Long id);
 }

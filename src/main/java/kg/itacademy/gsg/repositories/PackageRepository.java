@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PackageRepository extends JpaRepository<Package,Long> {
+public interface PackageRepository extends JpaRepository<Package, Long> {
 
     @Query("select new kg.itacademy.gsg.models.PackageModel(p.id,p.title,p.description) FROM Package p ORDER BY p.title ASC")
     Page<PackageModel> findAllPackagesWithPagination(Pageable pageable);

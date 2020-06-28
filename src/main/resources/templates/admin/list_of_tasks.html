@@ -3,15 +3,20 @@
 <layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
              layout:decorate="~{layout}">
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container" style="padding-top: 50px">
             <div class="row">
                 <div class="col-lg-12">
                     <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif; color: #2b3b55">
                             <span class="iconify"
-                                  data-inline="false"
-                                  data-icon="fe:list-task"
+                                  data-inline="false" data-icon="fe:list-task"
                                   style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
                         Список задач</h3>
+                </div>
+                <div th:if="${catId}" class="col-lg-1">
+                    <a th:href="@{'/task/form/' + ${packageId}+'/'+${catId}}">
+                        <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
+                              style="color: #2b3b55;font-size: 40px;"></span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -19,7 +24,7 @@
         <div class="container">
             <div class="card-deck">
                 <div class="card card1" th:each="task : ${taskList}">
-                    <div class="card-title border-bottom centered" th:text="${task.title}">
+                    <div class="card-title border-bottom centered" style="background: #CDD3DC" th:text="${task.title}">
                     </div>
 
                     <div class="card-body">
@@ -27,12 +32,6 @@
                         </h5>
 
                     </div>
-<!--                    <p class="centered">Статус:-->
-<!--                        <button type="button" class="btn btn-link"><span class="iconify" data-inline="false"-->
-<!--                                                                         data-icon="uil:process"-->
-<!--                                                                         style="font-size: 25px;color: darkorange; "></span>-->
-<!--                        </button>-->
-<!--                    </p>-->
                     <p class="centered">Редактировать:
                     <a th:href="'/task/'+${task.id}"
                        title="Список услуг этого пакета" class="btn btn-link">
@@ -43,18 +42,6 @@
                                         </span>
                     </a>
                     </p>
-<!--                    <p class="centered">-->
-<!--                        <button type="button" class="btn btn-link">-->
-
-<!--                            <span class="iconify i1" data-inline="false"-->
-<!--                                  data-icon="uil:process"-->
-<!--                                  style="color: darkorange;font-size: 30px;"></span>-->
-<!--                        </button>-->
-<!--                        <button type="button" class="btn btn-link"><span class="iconify i2" data-inline="false"-->
-<!--                                                                         data-icon="ic:outline-done"-->
-<!--                                                                         style="color: green;font-size: 30px;"></span>-->
-<!--                        </button>-->
-<!--                    </p>-->
                 </div>
             </div>
             <br>

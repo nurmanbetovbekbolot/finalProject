@@ -2,7 +2,7 @@
 <layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
              layout:decorate="~{layout}">
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container" style="padding-top: 50px">
             <div class="row">
                 <div class="col-lg-11">
                     <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif; color: #2b3b55">
@@ -27,7 +27,7 @@
                  aria-multiselectable="true"
                  th:each="category : ${categoryList}">
                 <div class="card card_acc">
-                    <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
+                    <div style="outline:2px solid #2b3b55; background:#CDD3DC" class="card-header c-h" role="tab"
                          th:id="'headingOne'+${category.id}">
                         <div class="row">
                             <div class="col-lg-10">
@@ -49,6 +49,14 @@
                                         <span class="iconify" data-icon="fa-solid:edit"
                                               style="color: #2b3b55;font-size:25px;"></span>
                                         <!--                                    Обновить-->
+                                    </a>
+                                    <a th:href="${category.id}+'/task/list'"
+                                       title="Список задач этой услуги" class="btn btn-link">
+                                        <span class="iconify"
+                                              data-icon="ant-design:unordered-list-outlined"
+                                              data-inline="false"
+                                              style="color: #2b3b55;font-size:25px;">
+                                        </span>
                                     </a>
                                     <button type="button"
                                             style="color: white;"

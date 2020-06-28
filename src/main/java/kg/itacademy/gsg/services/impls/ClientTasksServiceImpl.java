@@ -1,9 +1,12 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.ClientTasks;
+import kg.itacademy.gsg.entities.Notification;
+import kg.itacademy.gsg.entities.UserRole;
 import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.ClientTasksModel;
+import kg.itacademy.gsg.models.NotificationModel;
 import kg.itacademy.gsg.repositories.ClientTasksRepository;
 import kg.itacademy.gsg.services.ClientTasksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class ClientTasksServiceImpl implements ClientTasksService {
 
     @Autowired
     ClientTasksRepository clientTasksRepository;
+
+    @Autowired
+    NotificationServiceImpl notificationService;
 
     @Override
     public List<ClientTasksModel> getAll() {
@@ -57,6 +63,46 @@ public class ClientTasksServiceImpl implements ClientTasksService {
     @Override
     public ClientTasks save(ClientTasks clientTasks) {
         return clientTasksRepository.save(clientTasks);
+    }
+
+    @Override
+    public Page<ClientTasksModel> findAllClientTasksByOrderId(Long id, Pageable pageable) {
+        return clientTasksRepository.findAllClientTasksByOrder(id, pageable);
+    }
+
+    @Override
+    public Page<ClientTasksModel> findAllClientTasksByStatus(Status status, Pageable pageable) {
+        return clientTasksRepository.findAllClientTasksByStatus(status, pageable);
+    }
+
+    @Override
+    public ClientTasks changeClientTasksStatus(Long id, Status status, String userRole) {
+        return clientTasksRepository.findById(id)
+                .map(newClientTaskModel -> {
+                    if (userRole.equals("ROLE_MANAGER") || userRole.equals("ROLE_ADMIN")) {
+                        newClientTaskModel.setStatusManager(status);
+                        if (status.equals(Status.DONE)) {
+                            Notification notification = new Notification();
+                            notification.setMessage("Ваша задача " + newClientTaskModel.getTask().getTitle() + " выполнена");
+                            notification.setIsOpen(Boolean.FALSE);
+                            notification.setClientTask(newClientTaskModel);
+                            notificationService.saveNotification(notification);
+                        }
+
+                    } else {
+                        newClientTaskModel.setStatusClient(status);
+                        if (newClientTaskModel.getStatusClient().equals(Status.DECLINED)) {
+                            newClientTaskModel.setStatusManager(Status.INPROGRESS);
+                        }
+                    }
+                    return clientTasksRepository.save(newClientTaskModel);
+                })
+                .orElseThrow(() -> new RecordNotFoundException("Task not found with id:" + id));
+    }
+
+    @Override
+    public ClientTasksModel findClientTaskById(Long id) {
+        return clientTasksRepository.findClientTaskById(id);
     }
 
 //    @Override

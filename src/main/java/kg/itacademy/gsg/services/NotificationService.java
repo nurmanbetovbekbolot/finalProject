@@ -1,6 +1,7 @@
 package kg.itacademy.gsg.services;
 
 import kg.itacademy.gsg.entities.Notification;
+import kg.itacademy.gsg.models.NotificationModel;
 
 import java.util.List;
 
@@ -9,9 +10,10 @@ public interface NotificationService {
 
     Notification getNotificationById(Long id);
 
-    void updateNotification(Long id, Notification notification);
+    void updateNotification(Long id, NotificationModel notificationModel);
 
-    void saveNotification(Notification notification);
+    Notification saveNotification(NotificationModel notificationModel);
+    Notification saveNotification(Notification notification);
 
     void deleteNotificationById(Long id);
 }

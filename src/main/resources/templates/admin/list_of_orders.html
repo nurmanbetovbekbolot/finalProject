@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
              layout:decorate="~{layout}">
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container" style="padding-top: 50px">
             <div class="row" style="padding-bottom:20px">
                 <div class="col-sm-12">
                     <div class="card ">
@@ -15,9 +16,9 @@
                             </span>
                             <p class="display-4" style="color: #2B3B55" >Список заказов</p>
                         </div>
-                        <div class="col-lg-1">
+                        <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" class="col-lg-1">
                             <a th:href="'/order/form'">
-                        <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
+                            <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
                               style="color: #2b3b55;font-size: 40px;"></span>
                             </a>
                         </div>
@@ -77,7 +78,7 @@
                     <div class="card text-white mb-3 " style="background-color: #CDD3DC!important;">
                         <div class="card-header">
                             <p style="color: #2B3B55" th:text="${order.title}"></p>
-                            <button type="button" style="color: white;"
+                            <button sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" type="button" style="color: white;"
                                     class="btn btn-link" data-toggle="modal"
                                     th:attr="data-target='#recordDeleteModal'+${order.id}">
                                         <span class="iconify" data-inline="false"
@@ -87,21 +88,24 @@
 
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title" sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
                                 <a style="color: #2B3B55" th:href="'/user/'+ ${order.clientId.id}" th:text="${'Клиент: '+order.clientId.firstName+' '+order.clientId.lastName}"></a>
                             </h5>
                             <h5 class="card-title">
-                                <a style="color: #2B3B55" th:href="'/user/'+ ${order.managerId.id}" th:text="${'Менеджер: '+order.managerId.firstName+' '+order.managerId.lastName}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" style="color: #2B3B55" th:href="'/user/'+ ${order.managerId.id}" th:text="${'Менеджер: '+order.managerId.firstName+' '+order.managerId.lastName}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_USER')" style="color: #2B3B55; text-decoration: none;" th:text="${'Менеджер: '+order.managerId.firstName+' '+order.managerId.lastName}"></a>
                             </h5>
                             <h5 class="card-title">
-                                <a style="color: #2B3B55" th:href="'/order/'+ ${order.id} + '/clientTasks'" th:text="${'Пакет: '+order.packageId.title}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" style="color: #2B3B55" th:href="'/order/'+ ${order.id} + '/clientTasks'" th:text="${'Пакет: '+order.packageId.title}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_USER')" style="color: #2B3B55;" th:href="'/order/'+ ${order.id} + '/clientTasks'" th:text="${'Пакет: '+order.packageId.title}"></a>
                             </h5>
                             <h5 class="card-title" style="color: #2B3B55">
-                                <a style="color: #2B3B55; text-decoration: none;" href="" th:text="${'Время создания: '+ #dates.format(order.createdDate, 'dd-MM-yyyy')}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" style="color: #2B3B55; text-decoration: none;" href="" th:text="${'Время создания: '+ #dates.format(order.createdDate, 'dd-MM-yyyy')}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_USER')" style="color: #2B3B55; text-decoration: none;" th:text="${'Время создания: '+ #dates.format(order.createdDate, 'dd-MM-yyyy')}"></a>
                             </h5>
                         </div>
                     </div>
-                    <div data-backdrop="false" class="modal fade"
+                    <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" data-backdrop="false" class="modal fade"
                          th:attr="id='recordDeleteModal'+${order.id}" tabindex="-1" role="dialog"
                          aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -131,38 +135,6 @@
                     </div>
                 </div>
             </div>
-
-<!--            <div class="accordion md-accordion" th:id="'accordionEx'+${order.id}" role="tablist"-->
-<!--                 aria-multiselectable="true"-->
-<!--                 th:each="order : ${orderList}">-->
-<!--                <div class="card card_acc">-->
-<!--                    <div th:id="'collapseOne'+${order.id}" class="collapse show" role="tabpanel"-->
-<!--                         th:attr="data-parent='#accordionEx'+${order.id}"-->
-<!--                         aria-labelledby="headingOne1">-->
-<!--                        <div class="card-body c-b">-->
-<!--                            <div class="card-deck">-->
-<!--                                -->
-<!--                                <div class="card card_acc1">-->
-<!--                                    <a th:href="'/user/' + ${order.clientId.id}">-->
-<!--                                        <h5 class="card-title" th:text="${order.clientId.firstName+' '+order.clientId.lastName}">Описание</h5>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                                <div class="card card_acc1">-->
-<!--                                    <a th:href="'/user/' + ${order.managerId.id}">-->
-<!--                                        <h5 class="card-title" th:text="${order.managerId.firstName+' '+order.managerId.lastName}">Описание</h5>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                                <div class="card card_acc1">-->
-<!--                                    <h5 class="card-title" th:text="${order.packageId.title}">Описание</h5>-->
-<!--                                </div>-->
-<!--                                <div class="card card_acc1">-->
-<!--                                    <h5 class="card-title" th:text="${#dates.format(order.createdDate, 'dd-MM-yyyy')}">Описание</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
         <br><br>
         <div class="container con3">

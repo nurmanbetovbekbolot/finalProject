@@ -44,6 +44,12 @@ public class ClientTasks {
     @Column(name = "status_client")
     Status statusClient;
 
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "clients_comment",
+//            joinColumns = {@JoinColumn(name = "client_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "comment_id")})
+//    List<Comment> comments;
+
     public ClientTasks(User client, User manager, Order order, Task task, Status statusManager) {
         this.client = client;
         this.manager = manager;

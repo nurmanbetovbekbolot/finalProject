@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -23,13 +22,20 @@
 </head>
 
 <body>
-
-<div id="viewport">
-    <div id="sidebar"><br>
-        <div th:replace="fragments/leftMenu:: leftMenu"></div>
+<div>
+    <div id="viewport" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
+        <div id="sidebar"><br>
+            <div th:replace="fragments/leftMenu:: leftMenu"></div>
+        </div>
+        <div id="content">
+            <div layout:fragment="content"></div>
+        </div>
     </div>
-    <div id="content">
-        <div layout:fragment="content"></div>
+    <div sec:authorize="hasRole('ROLE_USER')" >
+        <div th:replace="fragments/userMenu:: userMenu"></div>
+        <div id="content">
+            <div layout:fragment="content" style="padding-top:50px;"></div>
+        </div>
     </div>
     <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -45,6 +51,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
 </div>
+
 </body>
 </html>
 

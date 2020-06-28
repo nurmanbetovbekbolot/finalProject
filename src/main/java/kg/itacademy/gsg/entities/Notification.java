@@ -23,7 +23,14 @@ public class Notification {
     @Column(name = "message")
     String message;
 
+    @ManyToOne
+    @JoinColumn(name = "client_task")
+    ClientTasks clientTask;
+
     @CreationTimestamp
     @Column(name = "created_date")
     Date createdDate;
+
+    @Column(name = "is_open")
+    Boolean isOpen;
 }

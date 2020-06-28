@@ -98,4 +98,9 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskModel> getAllByClientAndOrder(Order order) {
         return taskRepository.getAllByClientAndOrder(order.getClientId().getId(), order.getId());
     }
+
+    @Override
+    public Page<TaskModel> getAllByClientAndOrder(Order order, Pageable pageable) {
+        return taskRepository.getAllByClientAndOrder(order.getClientId().getId(), order.getId(), pageable);
+    }
 }

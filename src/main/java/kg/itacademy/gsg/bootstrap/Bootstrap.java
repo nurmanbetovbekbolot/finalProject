@@ -33,13 +33,13 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        UserRole roleUser= UserRole.builder()
+        UserRole roleUser = UserRole.builder()
                 .roleName("ROLE_USER")
                 .build();
-        UserRole roleManager= UserRole.builder()
+        UserRole roleManager = UserRole.builder()
                 .roleName("ROLE_MANAGER")
                 .build();
-        UserRole roleAdmin= UserRole.builder()
+        UserRole roleAdmin = UserRole.builder()
                 .roleName("ROLE_ADMIN")
                 .build();
 

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
              layout:decorate="~{layout}">
     <div layout:fragment="content">
-        <div class="container">
+        <div class="container" style="padding-top: 50px">
             <div class="row">
-                <div class="col-lg-11">
+                <div class="col-lg-12">
                     <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
                     <span class="iconify"
                           data-inline="false"
@@ -16,50 +17,110 @@
         </div>
         <br>
         <div class="container">
-            <div class="accordion md-accordion" th:id="'accordionEx'+${clientTask.id}" role="tablist"
-                 aria-multiselectable="true"
-                 th:each="clientTask : ${clientTaskList}">
-                <div class="card card_acc">
-                    <div style="outline:2px solid #2b3b55; background: #FFFFFF" class="card-header c-h" role="tab"
-                         th:id="'headingOne'+${clientTask.id}">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <h5 class="mb-0" style="color: #2b3b55;font-family: 'Gilroy Light'"
-                                    th:text="${clientTask.title}">
-                                </h5>
-                            </div>
-                        </div>
+            <div class="card-deck c1" style="pagination: 80px">
+                <div class="card card1" th:each="task : ${taskModels}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${task.getTask().getCategoryId().title}"></h5>
+                        <h5 class="card-title" th:text="${task.getTask().title}"></h5>
+                        <p class="card-text" th:text="${task.getTask().description}"></p><br>
+                        <p class="card-text" th:text="${task.getStatusClient()}"></p><br>
+                        <p class="card-text" th:text="${task.getStatusManager()}"></p><br>
+                        <p class="centered">Статус:
+                            <button type="button" class="btn btn-link">
+                                <span th:if="${task.statusManager.name() == 'TODO'}" class="iconify"
+                                      data-icon="emojione:free-button" data-inline="false"
+                                      style="font-size: 25px;color: blue;"></span>
+                                <span th:if="${task.statusManager.name() == 'INPROGRESS'}" class="iconify"
+                                      data-icon="uil:process"
+                                      style="font-size: 25px;color: darkorange;"></span>
+                                <span th:if="${task.statusManager.name() == 'DONE'}" class="iconify"
+                                      data-icon="ic:outline-done-outline" data-inline="false"
+                                      style="font-size: 25px;color: green;"></span>
+                            </button>
+                        </p>
                     </div>
-                    <div th:id="'collapseOne'+${clientTask.id}" class="collapse show card" role="tabpanel"
-                         th:attr="data-parent='#accordionEx'+${clientTask.id}"
-                         aria-labelledby="headingOne1" th:each="task : ${clientTask.taskModels}">
-                        <div class="card-body">
-                            <p class="card-text" th:text="${task.title+' '+task.description}">Описание</p>
-                        </div>
+                    <div sec:authorize="hasRole('ROLE_USER')">
+                        <form id="formLike"
+                              th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
+                              method="post">
+                            <input type="hidden" name="status" value="ACCEPTED">
+                        </form>
+                        <form id="formDislike"
+                              th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
+                              method="post">
+                            <input type="hidden" name="status" value="DECLINED">
+                        </form>
+                    <p class="centered" >
+                        <button type="submit" form="formLike" class="btn btn-link" th:if="${task.statusManager.name() == 'DONE'}">
+                            <span class="iconify i1" data-inline="false"
+                                  data-icon="simple-line-icons:like"
+                                  style="color: #2b3b55;font-size: 22px;"></span>
+                        </button>
+                        <button type="submit" form="formDislike" class="btn btn-link" th:if="${task.statusManager.name() == 'DONE'}">
+                            <span class="iconify i2" data-inline="false"
+                                  data-icon="simple-line-icons:dislike"
+                                  style="color: #2b3b55;font-size: 22px;"></span>
+                        </button>
+                        <button type="button" class="btn btn-link">
+                            <span class="iconify i3" data-inline="false"
+                                  data-icon="uil:comment"
+                                  style="color: #2b3b55;font-size: 22px;"></span>
+                        </button>
+                    </p>
+                    </div>
+                    <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+                        <form id="formTODO"
+                              th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
+                              method="post">
+                            <input type="hidden" name="status" value="TODO">
+                        </form>
+                        <form id="formINPROGRESS"
+                              th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
+                              method="post">
+                            <input type="hidden" name="status" value="INPROGRESS">
+                        </form>
+                        <form id="formDONE"
+                              th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
+                              method="post">
+                            <input type="hidden" name="status" value="DONE">
+                        </form>
+                        <p class="centered">
+                            <button type="submit" form="formTODO" class="btn btn-link">
+                                        <span class="iconify" data-icon="emojione:free-button" data-inline="false"
+                                              style="font-size: 25px;color: blue;"></span>
+                            </button>
+                            <button type="submit" form="formINPROGRESS" class="btn btn-link">
+                                    <span class="iconify" data-inline="false" data-icon="uil:process"
+                                          style="font-size: 25px;color: darkorange;"></span>
+                            </button>
+                            <button type="submit" form="formDONE" class="btn btn-link">
+                                    <span class="iconify" data-icon="ic:outline-done-outline" data-inline="false"
+                                          style="font-size: 25px;color: green;"></span>
+                            </button>
+                        </p>
                     </div>
                 </div>
-                <br>
             </div>
-
         </div>
+
         <br><br>
 
         <div class="container con3">
             <ul class="pagination justify-content-center">
-                <li class="page-item" th:if="${clientTaskList.hasPrevious()}">
-                    <a class="page-link" th:href="@{clientTasks(page=${clientTaskList.number -1})}"> < </a>
+                <li class="page-item" th:if="${taskModels.hasPrevious()}">
+                    <a class="page-link" th:href="@{clientTasks(page=${taskModels.number -1})}"> < </a>
                 </li>
-                <th:block th:each="i: ${#numbers.sequence(0, clientTaskList.totalPages - 1)}">
-                    <li class="page-item active" th:if="${clientTaskList.number == i}">
+                <th:block th:each="i: ${#numbers.sequence(0, taskModels.totalPages - 1)}">
+                    <li class="page-item active" th:if="${taskModels.number == i}">
                         <a th:href="@{clientTasks(page=${i})}" class="page-link ">[[${i}+1]]</a>
                     </li>
-                    <li class="page-item" th:unless="${clientTaskList.number == i}">
+                    <li class="page-item" th:unless="${taskModels.number == i}">
 
                         <a th:href="@{clientTasks(page=${i})}" class="page-link">[[${i}+1]]</a>
                     </li>
                 </th:block>
-                <li class="page-item" th:if="${clientTaskList.hasNext()}">
-                    <a class="page-link" th:href="@{clientTasks(page=${clientTaskList.number+1})}"> > </a>
+                <li class="page-item" th:if="${taskModels.hasNext()}">
+                    <a class="page-link" th:href="@{clientTasks(page=${taskModels.number+1})}"> > </a>
                 </li>
             </ul>
         </div>

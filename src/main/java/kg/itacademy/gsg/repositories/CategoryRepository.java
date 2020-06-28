@@ -21,7 +21,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Modifying
     @Transactional
     @Query(value = "delete FROM gsg_categories WHERE package_id = :package_id", nativeQuery = true)
-    void deleteCategoryByPackageId(@Param("package_id")Long id);
+    void deleteCategoryByPackageId(@Param("package_id") Long id);
 
     @Query("select new kg.itacademy.gsg.models.CategoryModel(c.id,c.title,c.packageId.id) FROM Category c where c.packageId.id = :id ORDER BY c.title ASC")
     Page<CategoryModel> findAllCategoriesByPackageId(Long id, Pageable pageable);
@@ -32,8 +32,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Modifying
     @Transactional
     @Query(value = "delete FROM gsg_categories WHERE id = :id", nativeQuery = true)
-    void deleteByCategoryId(@Param("id")Long id);
+    void deleteByCategoryId(@Param("id") Long id);
 
-    @Query("select new kg.itacademy.gsg.models.CategoryModel(c.id,c.title,c.packageId.id) FROM Category c join Task t on t.categoryId.id = c.id join ClientTasks ct on ct.task.id = t.id where ct.client.id = :clientId and ct.order.id = :orderId ORDER BY c.title ASC")
+    @Query("select DISTINCT new kg.itacademy.gsg.models.CategoryModel(c.id,c.title,c.packageId.id) FROM Category c join Task t on t.categoryId.id = c.id join ClientTasks ct on ct.task.id = t.id where ct.client.id = :clientId and ct.order.id = :orderId ORDER BY c.title ASC")
     List<CategoryModel> getAllByOrderAndClient(Long clientId, Long orderId);
 }

@@ -2,6 +2,7 @@ package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.*;
 import kg.itacademy.gsg.entities.Package;
+import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.*;
 import kg.itacademy.gsg.repositories.OrderRepository;
@@ -88,6 +89,7 @@ public class OrderServiceImpl implements OrderService {
                 clientTasks.setTask(task);
                 clientTasks.setManager(manager);
                 clientTasks.setOrder(orderSave);
+                clientTasks.setStatusManager(Status.TODO);
                 clientTasksService.save(clientTasks);
             }
         }
@@ -95,17 +97,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<ClientCategoryTasksModel> getClientCategoryTasks(Order order, Pageable pageable) {
-        List<CategoryModel> categoryModelList = categoryService.getAllByOrderAndClient(order);
-        List<ClientCategoryTasksModel> clientCategoryTasksModelsList = new ArrayList<>();
-        for(CategoryModel category : categoryModelList){
-            ClientCategoryTasksModel clientCategoryTasksModel = new ClientCategoryTasksModel();
-            clientCategoryTasksModel.setId(category.getId());
-            clientCategoryTasksModel.setTitle(category.getTitle());
-            clientCategoryTasksModel.setTaskModels(taskService.getAllByClientAndOrder(order));
-            clientCategoryTasksModelsList.add(clientCategoryTasksModel);
-        }
-        return new PageImpl<>(clientCategoryTasksModelsList);
+    public Page<TaskModel> getClientCategoryTasks(Order order, Pageable pageable) {
+        return  taskService.getAllByClientAndOrder(order, pageable);
     }
 
     @Override

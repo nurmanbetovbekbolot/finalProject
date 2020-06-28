@@ -14,12 +14,15 @@ import java.util.List;
 
 @Repository
 public interface ClientTasksRepository extends JpaRepository<ClientTasks, Long> {
-    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task,c.statusClient,c.statusManager) FROM ClientTasks c")
+    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task,c.statusManager,c.statusClient) FROM ClientTasks c")
     List<ClientTasksModel> findAllClientTasks();
 
-//    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task) FROM ClientTasks c where c.client.id = :id ORDER BY c.id DESC")
-//    Page<ClientTasksModel> findAllClientTasksByClientId(@Param("id")Long id, Pageable pageable);
+    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task,c.statusManager,c.statusClient) FROM ClientTasks c where c.id = :id")
+    ClientTasksModel findClientTaskById(@Param("id") Long id);
 
-//    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task,c.statusClient,c.statusManager) FROM ClientTasks c where c.statusClient = :status ORDER BY c.id DESC")
-//    Page<ClientTasksModel> findAllClientTasksByStatus(@Param("status")Status status, Pageable pageable);
+    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task,c.statusManager,c.statusClient) FROM ClientTasks c where c.statusClient = :status ORDER BY c.id DESC")
+    Page<ClientTasksModel> findAllClientTasksByStatus(@Param("status") Status status, Pageable pageable);
+
+    @Query("select new kg.itacademy.gsg.models.ClientTasksModel(c.id,c.client,c.manager,c.order,c.task,c.statusManager,c.statusClient) FROM ClientTasks c where c.order.id = :id ORDER BY c.id DESC")
+    Page<ClientTasksModel> findAllClientTasksByOrder(@Param("id") Long id, Pageable pageable);
 }

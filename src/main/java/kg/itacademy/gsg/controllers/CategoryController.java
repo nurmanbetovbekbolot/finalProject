@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
+@Secured({"ROLE_ADMIN","ROLE_MANAGER"})
 @RequestMapping("/category")
 public class CategoryController {
 
@@ -68,13 +70,17 @@ public class CategoryController {
         return "redirect:/category/list";
     }
 
-    @PostMapping(value = "/delete/{id}")
+    @PostMapping(value = "/update/{id}/{packageId}")
+    public String updateCategory(@PathVariable("packageId") Long packageId, @Valid @ModelAttribute("package") CategoryModel categoryModel, @PathVariable("id") Long id) {
+        categoryModel.setId(id);
+        categoryService.updateCategory(categoryModel);
+        return "redirect:/package/" + packageId + "/category/list";
+    }
+
+    @PostMapping(value = "/delete/{id}/{packageId}")
     public String deleteById(@PathVariable("id") Long id, @Param("packageId") Long packageId) {
         categoryService.deleteCategoryById(id);
-        if(packageId != null)
-            return "redirect:/package/"+packageId+"/category/list";
-
-        return "redirect:/category/list";
+        return "redirect:/package/"+packageId+"/category/list";
     }
 
     private void getUserInfo(Authentication authentication){

@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <form action="#" th:action="${add} ? '/task/create/' : '/task/update/' + ${task.id}" method="post">
+        <form action="#" th:action="${add} ? '/task/create/'+${packageId}+'/'+${catId} : (${packageId} ? '/task/update/' + ${task.id}+'/'+${packageId}+'/'+${catId} : '/task/update/' + ${task.id})" method="post">
             <div class="form-group">
                 <label for="taskNameInput">Название задачи</label>
                 <input th:value="${add} ? '' : ${task.title}" type="text" name="title" class="form-control"

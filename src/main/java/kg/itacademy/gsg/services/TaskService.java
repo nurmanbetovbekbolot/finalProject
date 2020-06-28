@@ -34,4 +34,6 @@ public interface TaskService {
     void deleteTaskByCategoryId(Long id);
 
     List<TaskModel> getAllByClientAndOrder(Order order);
+
+    Page<TaskModel> getAllByClientAndOrder(Order order, Pageable pageable);
 }

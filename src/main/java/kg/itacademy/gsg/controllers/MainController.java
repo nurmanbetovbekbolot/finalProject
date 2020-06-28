@@ -15,7 +15,7 @@ public class MainController {
         if (request.isUserInRole("ROLE_ADMIN") || request.isUserInRole("ROLE_MANAGER")) {
             return "redirect:/user/list";
         }else if (request.isUserInRole("ROLE_USER")){
-            return "redirect:/client/order/list";
+            return "redirect:/client/";
         }
         return "index";
     }

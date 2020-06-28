@@ -1,7 +1,6 @@
 package kg.itacademy.gsg.services;
 
 import kg.itacademy.gsg.entities.Order;
-import kg.itacademy.gsg.models.ClientCategoryTasksModel;
 import kg.itacademy.gsg.models.OrderCreationModel;
 import kg.itacademy.gsg.models.OrderModel;
 import kg.itacademy.gsg.models.TaskModel;
@@ -22,7 +21,7 @@ public interface OrderService {
 
     Order saveOrder(OrderCreationModel orderCreationModel);
 
-    Page<ClientCategoryTasksModel> getClientCategoryTasks(Order order, Pageable pageable);
+    Page<TaskModel> getClientCategoryTasks(Order order, Pageable pageable);
 
     void deleteOrderById(Long orderId);
 

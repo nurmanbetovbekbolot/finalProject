@@ -24,8 +24,6 @@ public interface UserService extends UserDetailsService {
 
     Page<UserModel> findAll(Pageable pageable);
 
-
-
     List<UserModel> getByRole(String name);
 
 }

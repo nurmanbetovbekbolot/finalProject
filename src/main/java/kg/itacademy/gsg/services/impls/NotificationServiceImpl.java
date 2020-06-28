@@ -1,6 +1,7 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.Notification;
+import kg.itacademy.gsg.models.NotificationModel;
 import kg.itacademy.gsg.repositories.NotificationRepository;
 import kg.itacademy.gsg.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,23 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void updateNotification(Long id, Notification notification) {
+    public void updateNotification(Long id, NotificationModel notificationModel) {
 
     }
 
     @Override
-    public void saveNotification(Notification notification) {
-        notificationRepository.save(notification);
+    public Notification saveNotification(NotificationModel notificationModel) {
+       Notification notification = new Notification();
+       notification.setMessage(notificationModel.getMessage());
+       notification.setClientTask(notificationModel.getClientTask());
+       notification.setIsOpen(Boolean.FALSE);
+        return notificationRepository.save(notification);
+    }
+
+    @Override
+    public Notification saveNotification(Notification notification) {
+        notification.setIsOpen(Boolean.FALSE);
+        return notificationRepository.save(notification);
     }
 
     @Override
