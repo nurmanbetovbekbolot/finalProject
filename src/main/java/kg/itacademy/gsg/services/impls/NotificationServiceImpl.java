@@ -1,10 +1,13 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.Notification;
+import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.NotificationModel;
 import kg.itacademy.gsg.repositories.NotificationRepository;
 import kg.itacademy.gsg.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,5 +52,20 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void deleteNotificationById(Long id) {
         notificationRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<NotificationModel> getAllNotificationsByClientId(Long id, Pageable pageable) {
+        return notificationRepository.getAllNotificationsByClientId(id, pageable);
+    }
+
+    @Override
+    public Notification isOpened(Long id) {
+        return notificationRepository.findById(id)
+                .map(notification -> {
+                    notification.setIsOpen(Boolean.TRUE);
+                    return notificationRepository.save(notification);
+                })
+                .orElseThrow(() -> new RecordNotFoundException("Notification not found with id:" + id));
     }
 }

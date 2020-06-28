@@ -1,10 +1,13 @@
 package kg.itacademy.gsg.controllers;
 
+import kg.itacademy.gsg.entities.Notification;
 import kg.itacademy.gsg.entities.User;
 import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.models.ClientTasksModel;
+import kg.itacademy.gsg.models.NotificationModel;
 import kg.itacademy.gsg.models.OrderModel;
 import kg.itacademy.gsg.services.ClientTasksService;
+import kg.itacademy.gsg.services.NotificationService;
 import kg.itacademy.gsg.services.OrderService;
 import kg.itacademy.gsg.services.UserService;
 import kg.itacademy.gsg.utils.MailSender;
@@ -22,7 +25,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/client")
 public class ClientController {
-
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     private OrderService orderService;
@@ -65,6 +69,25 @@ public class ClientController {
         model.addAttribute("bool", true);
         model.addAttribute("userName", user.getEmail());
         return "admin/list_of_clientTask";
+    }
+
+    @GetMapping(value = "/notification/list")
+    public String getAllNotifications(@PageableDefault(6) Pageable pageable, Model model, Authentication authentication) {
+        getUserInfo(authentication);
+        Page<NotificationModel> notificationModels = notificationService.getAllNotificationsByClientId(user.getId(), pageable);
+        model.addAttribute("notificationList", notificationModels);
+        model.addAttribute("userName", user.getEmail());
+        return "user/list_of_notifications";
+    }
+
+    @GetMapping("/notification/{id}")
+    public String detailNotificationPage(@PathVariable("id") Long id, Model model,Authentication authentication) {
+        getUserInfo(authentication);
+        notificationService.isOpened(id);
+        Notification notification = notificationService.getNotificationById(id);
+        model.addAttribute("userName", user.getEmail());
+        model.addAttribute("notification", notification);
+        return "user/notification_detail";
     }
 
     @GetMapping("/")

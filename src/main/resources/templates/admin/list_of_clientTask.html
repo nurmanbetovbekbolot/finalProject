@@ -40,23 +40,23 @@
                         </p>
                     </div>
                     <div sec:authorize="hasRole('ROLE_USER')">
-                        <form id="formLike"
+                        <form th:id="'formLike'+${task.id}"
                               th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
                               method="post">
                             <input type="hidden" name="status" value="ACCEPTED">
                         </form>
-                        <form id="formDislike"
+                        <form th:id="'formDislike'+${task.id}"
                               th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
                               method="post">
                             <input type="hidden" name="status" value="DECLINED">
                         </form>
                     <p class="centered" >
-                        <button type="submit" form="formLike" class="btn btn-link" th:if="${task.statusManager.name() == 'DONE'}">
+                        <button type="submit" th:form="'formLike'+${task.id}" class="btn btn-link" th:if="${task.statusManager.name() == 'DONE'}">
                             <span class="iconify i1" data-inline="false"
                                   data-icon="simple-line-icons:like"
                                   style="color: #2b3b55;font-size: 22px;"></span>
                         </button>
-                        <button type="submit" form="formDislike" class="btn btn-link" th:if="${task.statusManager.name() == 'DONE'}">
+                        <button type="submit" th:form="'formDislike'+${task.id}" class="btn btn-link" th:if="${task.statusManager.name() == 'DONE'}">
                             <span class="iconify i2" data-inline="false"
                                   data-icon="simple-line-icons:dislike"
                                   style="color: #2b3b55;font-size: 22px;"></span>
@@ -69,31 +69,31 @@
                     </p>
                     </div>
                     <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
-                        <form id="formTODO"
+                        <form th:id="'formTODO'+${task.id}"
                               th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
                               method="post">
                             <input type="hidden" name="status" value="TODO">
                         </form>
-                        <form id="formINPROGRESS"
+                        <form th:id="'formINPROGRESS'+${task.id}"
                               th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
                               method="post">
                             <input type="hidden" name="status" value="INPROGRESS">
                         </form>
-                        <form id="formDONE"
+                        <form th:id="'formDONE'+${task.id}"
                               th:action="@{'/client/order/'+${orderId}+'/clientTasks/'+${task.id}+'/changeStatus'}"
                               method="post">
                             <input type="hidden" name="status" value="DONE">
                         </form>
                         <p class="centered">
-                            <button type="submit" form="formTODO" class="btn btn-link">
+                            <button type="submit" th:form="'formTODO'+${task.id}" class="btn btn-link">
                                         <span class="iconify" data-icon="emojione:free-button" data-inline="false"
                                               style="font-size: 25px;color: blue;"></span>
                             </button>
-                            <button type="submit" form="formINPROGRESS" class="btn btn-link">
+                            <button type="submit" th:form="'formINPROGRESS'+${task.id}" class="btn btn-link">
                                     <span class="iconify" data-inline="false" data-icon="uil:process"
                                           style="font-size: 25px;color: darkorange;"></span>
                             </button>
-                            <button type="submit" form="formDONE" class="btn btn-link">
+                            <button type="submit" th:form="'formDONE'+${task.id}" class="btn btn-link">
                                     <span class="iconify" data-icon="ic:outline-done-outline" data-inline="false"
                                           style="font-size: 25px;color: green;"></span>
                             </button>
