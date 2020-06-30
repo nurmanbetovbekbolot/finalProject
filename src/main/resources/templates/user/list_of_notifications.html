@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+        <div class="container" style="padding-top: 50px">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Уведомления</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <section class="content inbox">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <ul class="mail_list list-group list-unstyled">
+                                <li th:class="${notification.isOpen} ? 'list-group-item' : 'list-group-item unread'"
+                                    th:each="notification : ${notificationList}">
+                                    <div class="media">
+                                        <div class="pull-left">
+                                            <div class="controls">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" id="basic_checkbox_1">
+                                                    <label for="basic_checkbox_1"></label>
+                                                </div>
+                                            </div>
+                                            <div class="thumb hidden-sm-down m-r-20"><img
+                                                    src="assets/images/xs/avatar1.jpg" class="rounded-circle" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="media-heading">
+                                                <a th:href="${notification.id}" class="m-r-10"
+                                                   th:text="${notification.clientTask.task.title}">Velit a labore</a>
+                                                <span class="badge bg-blue"
+                                                      th:text="${notification.clientTask.task.categoryId.title}">Family</span>
+                                                <small class="float-right text-muted">
+                                                    <time class="hidden-sm-down" datetime="2017"
+                                                          th:text="${'12:35 PM ('+notification.createdDate+')'}">12:35
+                                                        AM
+                                                    </time>
+                                                    <i class="zmdi zmdi-attachment-alt"></i> </small>
+                                            </div>
+                                            <p class="msg" th:text="${notification.message}">Lorem Ipsum is simply dumm
+                                                dummy text of the printing and typesetting industry. </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <br><br>
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${notificationList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/client/notification/list(page=${notificationList.number -1})}">
+                        < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, notificationList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${notificationList.number == i}">
+                        <a th:href="@{/client/notification/list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${notificationList.number == i}">
+
+                        <a th:href="@{/client/notification/list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${notificationList.hasNext()}">
+                    <a class="page-link" th:href="@{/client/notification/list(page=${notificationList.number+1})}">
+                        > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<layout:html xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:th="http://www.thymeleaf.org"
+             lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif" th:text="${add} ? 'Добавить пакет' : 'Редактировать пакет'">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Добавить новый пакет</h3>
+                </div>
+            </div>
+        </div>
+        <form action="#" class="needs-valid" th:action="${add} ? '/package/create/' : '/package/update/' + ${package.id}" method="post" novalidate>
+            <div class="form-group">
+                <label for="packageNameInput">Название пакета</label>
+                <input th:value="${add} ? '' : ${package.title}" type="text" name="title" class="form-control" id="packageNameInput" placeholder="Введите название" minlength="2" maxlength="50" required>
+            </div>
+            <div class="form-group">
+                <label for="packageDescInput">Описание пакета</label>
+                <input th:value="${add} ? '' : ${package.description}" type="text" name="description" class="form-control" id="packageDescInput" placeholder="Введите описание" minlength="5" maxlength="500" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-valid');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+    </div>
+</layout:html>

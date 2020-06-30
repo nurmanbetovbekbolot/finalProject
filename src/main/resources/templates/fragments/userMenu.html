@@ -1,0 +1,35 @@
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="userMenu">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container-fluid">
+            <img th:src="@{/img/gsg.png}" alt="" class="img_gsg1 mx-auto text-center">
+
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <a href="/client/order/list" class="nav-link active">
+                        <li class="nav-item n2">Мои заказы</li>
+                    </a>
+                    <a href="#uslugi" class="nav-link">
+                        <li class="nav-item n2">Мои пакеты</li>
+                    </a>
+                    <a href="/client/notification/list">
+                        <span class="iconify" data-icon="mdi:bell-ring"
+                              style="color: #2b3b55;font-size: 20px; margin-right: 30px"
+                              data-inline="false"></span>
+                    </a>
+                    <li class="nav-item n1" style="font-size: 20px; color: #2b3b55" th:text="${userName}">
+                    <span class="iconify" data-inline="false" data-icon="et:profile-male"
+                          style="font-size: 50px; color: #2b3b55;"></span> Asan Asanov
+                    </li>
+                    <li class="nav-item"><a href=/logout class="nav-link">
+                    <span class="iconify" data-inline="false" data-icon="cil:account-logout"
+                          style="color: #2b3b55; font-size: 25px;"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</html>

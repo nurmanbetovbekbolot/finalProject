@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container" style="padding-top: 50px">
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-12">
+                    <div class="card ">
+                        <!-- card-header -->
+                        <div class="card-header text-white" style="background-color: #CDD3DC!important;">
+                            <span class="iconify"
+                                  data-inline="false"
+                                  data-icon="ic:baseline-work"
+                                  style="color: #2B3B55;font-size: 50px; margin-right: 30px">
+                            </span>
+                            <p class="display-4" style="color: #2B3B55" >Список заказов</p>
+                        </div>
+                        <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" class="col-lg-1">
+                            <a th:href="'/order/form'">
+                            <span class="iconify" data-inline="false" data-icon="bi:plus-circle"
+                              style="color: #2b3b55;font-size: 40px;"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" class="row">
+                <div class="col-sm-6">
+                    <div class="card "  style="background-color: #CDD3DC!important;">
+                        <!-- card-header -->
+                        <div class="card-header text-white">
+                            <p style="color: #2B3B55">
+                                Найти заказ
+                            </p>
+                        </div>
+                        <!-- card-body -->
+                        <div class="card-body">
+                            <!-- HTML форма -->
+                            <form action="#" role="search" th:action="@{/order/list}" method="get">
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control" placeholder="Поиск по названию, клиенту, менеджеру и пакету" value="">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-secondary">Поиск</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card " style="background-color: #CDD3DC!important;">
+                        <div class="card-header text-white">
+                            <p style="color: #2B3B55">
+                                Поиск по дате
+                            </p>
+                        </div>
+                        <div class="card-body">
+                        <!-- HTML форма -->
+                        <form action="#" role="search">
+                            <div class="input-group">
+                                <input type="date" name="dateFrom" class="form-control">
+                                <input type="date" name="dateTo" class="form-control">
+                                <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-secondary">Поиск</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4" th:each="order : ${orderList}">
+                    <div class="card text-white mb-3 " style="background-color: #CDD3DC!important;">
+                        <div class="card-header">
+                            <p style="color: #2B3B55" th:text="${order.title}"></p>
+                            <button sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" type="button" style="color: white;"
+                                    class="btn btn-link" data-toggle="modal"
+                                    th:attr="data-target='#recordDeleteModal'+${order.id}">
+                                        <span class="iconify" data-inline="false"
+                                              data-icon="ant-design:delete-filled"
+                                              style="color: #2b3b55;font-size:25px;"></span>
+                            </button>
+
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+                                <a style="color: #2B3B55" th:href="'/user/'+ ${order.clientId.id}" th:text="${'Клиент: '+order.clientId.firstName+' '+order.clientId.lastName}"></a>
+                            </h5>
+                            <h5 class="card-title">
+                                <a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" style="color: #2B3B55" th:href="'/user/'+ ${order.managerId.id}" th:text="${'Менеджер: '+order.managerId.firstName+' '+order.managerId.lastName}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_USER')" style="color: #2B3B55; text-decoration: none;" th:text="${'Менеджер: '+order.managerId.firstName+' '+order.managerId.lastName}"></a>
+                            </h5>
+                            <h5 class="card-title">
+                                <a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" style="color: #2B3B55" th:href="'/order/'+ ${order.id} + '/clientTasks'" th:text="${'Пакет: '+order.packageId.title}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_USER')" style="color: #2B3B55;" th:href="'/order/'+ ${order.id} + '/clientTasks'" th:text="${'Пакет: '+order.packageId.title}"></a>
+                            </h5>
+                            <h5 class="card-title" style="color: #2B3B55">
+                                <a sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" style="color: #2B3B55; text-decoration: none;" href="" th:text="${'Время создания: '+ #dates.format(order.createdDate, 'dd-MM-yyyy')}"></a>
+                                <a sec:authorize="hasAnyRole('ROLE_USER')" style="color: #2B3B55; text-decoration: none;" th:text="${'Время создания: '+ #dates.format(order.createdDate, 'dd-MM-yyyy')}"></a>
+                            </h5>
+                        </div>
+                    </div>
+                    <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" data-backdrop="false" class="modal fade"
+                         th:attr="id='recordDeleteModal'+${order.id}" tabindex="-1" role="dialog"
+                         aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="recordDeleteModalLabel">
+                                        Удаление пакета</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label>Вы действительно хотите удалить?</label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Нет
+                                    </button>
+                                    <form th:action="@{/order/delete/{id}(id = ${order.id})}"
+                                          method="post">
+                                        <button type="submit" class="btn btn-info m-t-10">Да</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${orderList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/order/list(page=${orderList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, orderList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${orderList.number == i}">
+                        <a th:href="@{/order/list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${orderList.number == i}">
+
+                        <a th:href="@{/order/list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${orderList.hasNext()}">
+                    <a class="page-link" th:href="@{/order/list(page=${orderList.number+1})}"> > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>

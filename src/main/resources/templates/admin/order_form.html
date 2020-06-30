@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<layout:html xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:th="http://www.thymeleaf.org"
+             lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Добавить новый заказ</h3>
+                </div>
+            </div>
+        </div>
+        <form action="#" th:action="${add} ? '/order/create/' : '/order/update/' + ${order.id}" method="post">
+            <div class="form-group">
+                <label for="orderNameInput">Название заказа</label>
+                <input th:value="${add} ? '' : ${order.title}" type="text" name="title" class="form-control" id="orderNameInput" placeholder="Введите название" minlength="2" maxlength="50" required>
+            </div>
+            <div th:if="${add}" class="form-group">
+                <label class="text-danger font-bold" for="input-select1">Выбрать клиента</label>
+                <select name="clientId" class="form-control" id="input-select1">
+                    <option th:each="client : ${userList}" th:value="${client.id}" th:text="${'Имя: '+client.firstName+', Фамилия: '+client.lastName+', Имя пользователя: '+client.email}"></option>
+                </select>
+            </div>
+
+            <div th:if="${add}" class="form-group">
+                <label class="text-danger font-bold" for="input-select2">Выбрать пакет</label>
+                <select name="packageId" class="form-control" id="input-select2">
+                    <option th:each="package : ${packageList}" th:value="${package.id}" th:text="${'Название пакета: '+package.title}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</layout:html>

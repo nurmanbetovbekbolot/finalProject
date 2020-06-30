@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container" style="padding-top: 50px">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Список услуг и задач</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div>
+                <ul>
+                    <li  th:each="file : ${fileList}">
+                        <a th:href="'/mediaFile/download/'+${file.id}" th:text="${file.title}" />
+                    </li>
+                </ul>
+            </div>
+            <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+                <form id="addFileForm" method="POST" enctype="multipart/form-data" th:action="create">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                         Прикрепите файл
+                        </label>
+                        <div class="col-sm-9">
+                            <span class="btn btn-default btn-file">
+                                <input id="input-2" name="docs" type="file" class="file" data-show-upload="true" data-show-caption="true">
+                            </span>
+                        </div>
+                    </div>
+                    <button type="submit" form="addFileForm" class="btn btn-primary mb-2">Confirm file</button>
+                </form>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${fileList.hasPrevious()}">
+                    <a class="page-link" th:href="@{list(page=${fileList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, fileList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${fileList.number == i}">
+                        <a th:href="@{list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${fileList.number == i}">
+
+                        <a th:href="@{list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${fileList.hasNext()}">
+                    <a class="page-link" th:href="@{list(page=${fileList.number+1})}"> > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>
