@@ -3,6 +3,7 @@ package kg.itacademy.gsg.services;
 import kg.itacademy.gsg.entities.ClientTasks;
 import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.models.ClientTasksModel;
+import kg.itacademy.gsg.models.TaskModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,4 +29,8 @@ public interface ClientTasksService {
     ClientTasksModel findClientTaskById(Long id);
 
     void deleteById(Long id);
+
+    void deleteClientTasksByOrder(Long id);
+
+    ClientTasks saveClientTaskInOrder(Long orderId, TaskModel taskModel);
 }

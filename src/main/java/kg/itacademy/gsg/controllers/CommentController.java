@@ -1,8 +1,18 @@
 package kg.itacademy.gsg.controllers;
 
+import kg.itacademy.gsg.entities.ClientTasks;
 import kg.itacademy.gsg.entities.Comment;
+import kg.itacademy.gsg.entities.User;
+import kg.itacademy.gsg.models.CommentModel;
+import kg.itacademy.gsg.services.ClientTasksService;
 import kg.itacademy.gsg.services.CommentService;
+import kg.itacademy.gsg.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +26,42 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping(value = "/list")
-    public String getCommentList(Model model) {
-        List<Comment> commentList = commentService.getAllComments();
-        model.addAttribute("commentList", commentList);
-        model.addAttribute("bool", true);
-        return "commentList";
+    @Autowired
+    private ClientTasksService clientTasksService;
+
+    @Autowired
+    private UserService userService;
+
+    private User user;
+
+    @GetMapping(value = "/{id}/list")
+    public String getCommentList(@PathVariable("id") Long id, @PageableDefault(9) Pageable pageable, Model model, Authentication authentication) {
+        getUserInfo(authentication);
+        Page<CommentModel> commentModels = commentService.getAllCommentsByTask(id, pageable);
+        model.addAttribute("commentList", commentModels);
+        model.addAttribute("taskId", id);
+        model.addAttribute("userName", user.getEmail());
+        return "admin/list_of_comments";
     }
 
-    @GetMapping(value = "/{id}")
-    public String commentInfo(@PathVariable("id") Long id, Model model) {
-        Comment comment = commentService.getCommentById(id);
-        model.addAttribute("comment", comment);
-        return "commentDetail";
-    }
-
-    @PostMapping(value = "/create")
-    public String addComment(@Valid @ModelAttribute("comment") Comment comment) {
+    @PostMapping(value = "/{id}/create")
+    public String addComment(@PathVariable("id") Long id, @Valid @ModelAttribute("comment") Comment comment, Authentication authentication) {
+        getUserInfo(authentication);
+        comment.setUser(user);
+        comment.setClientTask(clientTasksService.getById(id));
         commentService.saveComment(comment);
-        return "redirect:/comment/list";
+        return "redirect:/comment/"+id+"/list";
     }
 
     @PostMapping(value = "/delete/{id}")
     public String deleteById(@PathVariable("id") Long id) {
         commentService.deleteCommentById(id);
         return "redirect:/comment/list";
+    }
+
+
+    private void getUserInfo(Authentication authentication) {
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        user = userService.findByEmail(userPrincipal.getUsername());
     }
 }

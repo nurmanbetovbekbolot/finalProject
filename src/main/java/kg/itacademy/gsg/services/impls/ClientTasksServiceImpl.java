@@ -1,12 +1,11 @@
 package kg.itacademy.gsg.services.impls;
 
-import kg.itacademy.gsg.entities.ClientTasks;
-import kg.itacademy.gsg.entities.Notification;
-import kg.itacademy.gsg.entities.UserRole;
+import kg.itacademy.gsg.entities.*;
 import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.exceptions.RecordNotFoundException;
 import kg.itacademy.gsg.models.ClientTasksModel;
 import kg.itacademy.gsg.models.NotificationModel;
+import kg.itacademy.gsg.models.TaskModel;
 import kg.itacademy.gsg.repositories.ClientTasksRepository;
 import kg.itacademy.gsg.services.ClientTasksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,12 @@ public class ClientTasksServiceImpl implements ClientTasksService {
 
     @Autowired
     NotificationServiceImpl notificationService;
+
+    @Autowired
+    OrderServiceImpl orderService;
+
+    @Autowired
+    TaskServiceImpl taskService;
 
     @Override
     public List<ClientTasksModel> getAll() {
@@ -118,5 +123,23 @@ public class ClientTasksServiceImpl implements ClientTasksService {
     @Override
     public void deleteById(Long id) {
         clientTasksRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteClientTasksByOrder(Long id) {
+        clientTasksRepository.deleteClientTasksByOrder(id);
+    }
+
+    @Override
+    public ClientTasks saveClientTaskInOrder(Long orderId, TaskModel taskModel) {
+        Order order = orderService.getOrderById(orderId);
+        Task task = taskService.saveTask(taskModel);
+        ClientTasks clientTasks = new ClientTasks();
+        clientTasks.setTask(task);
+        clientTasks.setClient(order.getClientId());
+        clientTasks.setManager(order.getManagerId());
+        clientTasks.setStatusManager(Status.TODO);
+        clientTasks.setOrder(order);
+        return clientTasksRepository.save(clientTasks);
     }
 }

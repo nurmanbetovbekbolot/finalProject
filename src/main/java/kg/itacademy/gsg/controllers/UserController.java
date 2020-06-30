@@ -32,7 +32,6 @@ public class UserController {
         Page<UserModel> userList = userService.findAll(pageable);
         model.addAttribute("userList", userList);
         model.addAttribute("userName", username);
-        model.addAttribute("bool", true);
         return "admin/list_of_users";
     }
 //

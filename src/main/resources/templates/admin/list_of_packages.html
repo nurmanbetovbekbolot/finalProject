@@ -37,22 +37,23 @@
                                 </h5>
                             </div>
                             <div class="col-lg-2">
-                                <div class="row">
-                                    <a data-toggle="collapse" th:attr="data-parent='#accordionEx'+${p.id}"
+                                <div class="row" style="position: absolute " >
+                                    <a data-toggle="collapse"
+                                       th:attr="data-parent='#accordionEx'+${p.id}"
                                        th:href="'#collapseOne'+${p.id}"
                                        aria-expanded="true"
                                        aria-controls="collapseOne1">
                                         <span class="iconify centered" data-inline="false"
                                               data-icon="dashicons:arrow-down-alt2"
-                                              style="color: #2b3b55; font-size:25px; margin-top: -10px">
+                                              style="color: #2b3b55; font-size:25px;">
                                         </span>
                                     </a>
 
-                                    <a th:href="'/package/' + ${p.id}" type="button" style="color: white;"
+                                    <a th:href="'/package/' + ${p.id}"
+                                       type="button" style="color: white;"
                                        class="btn btn-link">
                                         <span class="iconify" data-icon="fa-solid:edit"
                                               style="color: #2b3b55;font-size:25px;"></span>
-                                        <!--                                    Обновить-->
                                     </a>
 
                                     <a th:href="'/package/'+${p.id}+'/category/list'"
@@ -111,7 +112,6 @@
                         </div>
                     </div>
                 </div>
-                <br>
             </div>
 
         </div>

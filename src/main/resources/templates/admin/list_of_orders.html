@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" class="row">
                 <div class="col-sm-6">
                     <div class="card "  style="background-color: #CDD3DC!important;">
                         <!-- card-header -->

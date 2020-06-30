@@ -56,7 +56,6 @@ public class OrderController {
         }
         model.addAttribute("userName", user.getEmail());
         model.addAttribute("orderList", orderList);
-        model.addAttribute("bool", true);
         return "admin/list_of_orders";
     }
 

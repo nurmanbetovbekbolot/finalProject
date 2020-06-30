@@ -26,12 +26,12 @@ public class Comment {
     String commentText;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     User user;
 
     @ManyToOne
-    @JoinColumn(name = "task_id", nullable = false)
-    Task task;
+    @JoinColumn(name = "client_task")
+    ClientTasks clientTask;
 
     @CreationTimestamp
     @Column(name = "created_date")

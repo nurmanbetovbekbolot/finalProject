@@ -1,8 +1,11 @@
 package kg.itacademy.gsg.controllers;
 
+import kg.itacademy.gsg.entities.ClientTasks;
 import kg.itacademy.gsg.entities.Task;
 import kg.itacademy.gsg.models.TaskModel;
 import kg.itacademy.gsg.services.CategoryService;
+import kg.itacademy.gsg.services.ClientTasksService;
+import kg.itacademy.gsg.services.OrderService;
 import kg.itacademy.gsg.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@Secured({"ROLE_ADMIN","ROLE_MANAGER"})
+@Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
 @RequestMapping("/task")
 public class TaskController {
     @Autowired
@@ -27,6 +30,12 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private ClientTasksService clientTasksService;
+
+    @Autowired
+    private OrderService orderService;
 
     String username;
 
@@ -36,7 +45,6 @@ public class TaskController {
         getUserInfo(authentication);
         Page<TaskModel> taskList = taskService.findAll(pageable);
         model.addAttribute("taskList", taskList);
-        model.addAttribute("bool", true);
         model.addAttribute("userName", username);
         return "admin/list_of_tasks";
     }
@@ -47,6 +55,15 @@ public class TaskController {
         Task task = taskService.getTaskById(id);
         model.addAttribute("task", task);
         model.addAttribute("add", false);
+        model.addAttribute("userName", username);
+        return "admin/task_form";
+    }
+
+    @GetMapping(value = "/form/{orderId}")
+    public String getCreateTaskForm(@PathVariable("orderId") Long orderId, Model model, Authentication authentication) {
+        getUserInfo(authentication);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("add", true);
         model.addAttribute("userName", username);
         return "admin/task_form";
     }
@@ -62,10 +79,16 @@ public class TaskController {
     }
 
     @PostMapping(value = "/create/{packageId}/{catId}")
-    public String addTask(@PathVariable("packageId") Long packageId, @PathVariable("catId") Long catId, @Valid @ModelAttribute("task") TaskModel taskModel){
+    public String addTask(@PathVariable("packageId") Long packageId, @PathVariable("catId") Long catId, @Valid @ModelAttribute("task") TaskModel taskModel) {
         taskModel.setCategoryId(categoryService.getCategoryById(catId));
         taskService.saveTask(taskModel);
-        return "redirect:/package/" + packageId + "/category/"+catId+"/task/list";
+        return "redirect:/package/" + packageId + "/category/" + catId + "/task/list";
+    }
+
+    @PostMapping(value = "/create/{orderId}")
+    public String addTask(@PathVariable("orderId") Long orderId, @Valid @ModelAttribute("task") TaskModel taskModel) {
+        clientTasksService.saveClientTaskInOrder(orderId, taskModel);
+        return "redirect:/order/" + orderId + "/clientTasks";
     }
 
     @PostMapping(value = "/update/{id}")
@@ -79,7 +102,7 @@ public class TaskController {
     public String updateTask(@PathVariable("packageId") Long packageId, @PathVariable("catId") Long catId, @Valid @ModelAttribute("task") TaskModel taskModel, @PathVariable("id") Long id) {
         taskModel.setId(id);
         taskService.updateTask(taskModel);
-        return "redirect:/package/" + packageId + "/category/"+catId+"/task/list";
+        return "redirect:/package/" + packageId + "/category/" + catId + "/task/list";
     }
 
     @PostMapping(value = "/delete/{id}")
@@ -88,11 +111,18 @@ public class TaskController {
         return "redirect:/task/list";
     }
 
+    @PostMapping(value = "{id}/delete/clientTask")
+    public String deleteByClientTaskId(@PathVariable("id") Long id) {
+        Long orderId = clientTasksService.getById(id).getOrder().getId();
+        clientTasksService.deleteById(id);
+        return "redirect:/order/" + orderId + "/clientTasks";
+    }
+
 
     @PostMapping(value = "/delete/{id}/{packageId}/{catId}")
     public String deleteById(@PathVariable("packageId") Long packageId, @PathVariable("catId") Long catId, @PathVariable("id") Long id) {
         taskService.deleteTaskById(id);
-        return "redirect:/package/" + packageId + "/category/"+catId+"/task/list";
+        return "redirect:/package/" + packageId + "/category/" + catId + "/task/list";
     }
 
     private void getUserInfo(Authentication authentication) {

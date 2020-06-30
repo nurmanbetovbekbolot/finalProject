@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<layout:html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
+             layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="container" style="padding-top: 50px">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="text-align: center; font-family: 'Gilroy Light', sans-serif">
+                    <span class="iconify"
+                          data-inline="false"
+                          data-icon="gridicons:list-ordered"
+                          style="color: #2b3b55;font-size: 50px; margin-right: 30px"></span>
+                        Список услуг и задач</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="be-comment-block">
+                <h1 class="comments-title" th:text="${'Comments: ' + commentList.getTotalElements()}">Comments (3)</h1>
+                <div class="be-comment" th:each="comment : ${commentList}">
+                    <!--                    <div class="be-img-comment">-->
+                    <!--                        <a href="blog-detail-2.html">-->
+                    <!--                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">-->
+                    <!--                        </a>-->
+                    <!--                    </div>-->
+                    <div class="be-comment-content">
+                        <span class="be-comment-name">
+                            <a href="#" th:text="${comment.user.firstName+' '+comment.user.lastName}">Ravi Sah</a>
+                        </span>
+                        <span class="be-comment-time">
+                            <i class="fa fa-clock-o" th:text="${comment.createdDate}"></i>
+                        </span>
+                        <p class="be-comment-text" th:text="${comment.commentText}">
+                        </p>
+                    </div>
+                </div>
+                <form class="form-block" id="createComment" th:action="'/comment/'+${taskId}+'/create'" method="post">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <textarea class="form-input" required="" name="commentText"
+                                          placeholder="Your text"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" form="createComment" class="btn btn-primary pull-right" style="siz">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="container con3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:if="${commentList.hasPrevious()}">
+                    <a class="page-link" th:href="@{list(page=${commentList.number -1})}"> < </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, commentList.totalPages - 1)}">
+                    <li class="page-item active" th:if="${commentList.number == i}">
+                        <a th:href="@{list(page=${i})}" class="page-link ">[[${i}+1]]</a>
+                    </li>
+                    <li class="page-item" th:unless="${commentList.number == i}">
+
+                        <a th:href="@{list(page=${i})}" class="page-link">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${commentList.hasNext()}">
+                    <a class="page-link" th:href="@{list(page=${commentList.number+1})}"> > </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</layout:html>

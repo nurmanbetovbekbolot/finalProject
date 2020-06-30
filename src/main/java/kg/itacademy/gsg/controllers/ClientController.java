@@ -4,12 +4,10 @@ import kg.itacademy.gsg.entities.Notification;
 import kg.itacademy.gsg.entities.User;
 import kg.itacademy.gsg.enums.Status;
 import kg.itacademy.gsg.models.ClientTasksModel;
+import kg.itacademy.gsg.models.CommentModel;
 import kg.itacademy.gsg.models.NotificationModel;
 import kg.itacademy.gsg.models.OrderModel;
-import kg.itacademy.gsg.services.ClientTasksService;
-import kg.itacademy.gsg.services.NotificationService;
-import kg.itacademy.gsg.services.OrderService;
-import kg.itacademy.gsg.services.UserService;
+import kg.itacademy.gsg.services.*;
 import kg.itacademy.gsg.utils.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/client")
 public class ClientController {
+    @Autowired
+    private CommentService commentService;
+
     @Autowired
     private NotificationService notificationService;
 
@@ -48,9 +49,9 @@ public class ClientController {
         Page<OrderModel> clientOrderList = orderService.findAllOrdersByClientId(user.getId(), pageable);
         model.addAttribute("orderList", clientOrderList);
         model.addAttribute("userName", user.getEmail());
-        model.addAttribute("bool", true);
         return "admin/list_of_orders";
     }
+
 
     @PostMapping(value = "/order/{id}/clientTasks/{clientTaskId}/changeStatus")
     public String changeClientTasksStatus(@PathVariable("id") Long id, @PathVariable("clientTaskId") Long clientTaskId, @ModelAttribute("status") Status status, Authentication authentication) {

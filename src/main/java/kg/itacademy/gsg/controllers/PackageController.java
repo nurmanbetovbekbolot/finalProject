@@ -36,7 +36,6 @@ public class PackageController {
         Page<PackageModel> packageList = packageService.findAll(pageable);
         model.addAttribute("packageList", packageList);
         model.addAttribute("userName", username);
-        model.addAttribute("bool", true);
         return "admin/list_of_packages";
     }
 

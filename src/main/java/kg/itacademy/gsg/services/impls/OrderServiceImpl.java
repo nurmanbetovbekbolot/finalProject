@@ -79,11 +79,9 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setTitle(orderCreationModel.getTitle());
         List<CategoryModel> categoryModelList = categoryService.getAllByPackageId(pFromDB.getId());
         Order orderSave = orderRepository.save(newOrder);
-        for(CategoryModel catModel : categoryModelList){
+        for (CategoryModel catModel : categoryModelList) {
             List<Task> taskList = taskService.findAllTasksByCatId(catModel.getId());
-            for (Task task : taskList){
-//                Task task = new Task(taskModel.getTitle(), taskModel.getDescription(), taskModel.getStatus(), categoryService.getCategoryById(catModel.getId()));
-//                taskService.saveTask(task);
+            for (Task task : taskList) {
                 ClientTasks clientTasks = new ClientTasks();
                 clientTasks.setClient(user);
                 clientTasks.setTask(task);
@@ -98,11 +96,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<TaskModel> getClientCategoryTasks(Order order, Pageable pageable) {
-        return  taskService.getAllByClientAndOrder(order, pageable);
+        return taskService.getAllByClientAndOrder(order, pageable);
     }
 
     @Override
     public void deleteOrderById(Long orderId) {
+        clientTasksService.deleteClientTasksByOrder(orderId);
         orderRepository.deleteByOrderId(orderId);
     }
 
@@ -118,6 +117,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderModel> findAllOrdersByDate(Date dateFrom, Date dateTo, Pageable pageable) {
-        return orderRepository.findAllOrdersByDate(dateFrom,dateTo,pageable);
+        return orderRepository.findAllOrdersByDate(dateFrom, dateTo, pageable);
     }
 }

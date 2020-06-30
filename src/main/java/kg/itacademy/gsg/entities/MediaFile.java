@@ -3,6 +3,7 @@ package kg.itacademy.gsg.entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,19 +16,24 @@ import java.util.Date;
 @Builder
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "gsg_mediafiles")
 public class MediaFile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+    @Column(name = "title")
+    String title;
+
     @Column(name = "file")
-    String file;
+    byte[] file;
 
     @ManyToOne
-    @JoinColumn(name = "task_id", nullable = false)
-    Task task;
+    @JoinColumn(name = "client_task_id", nullable = false)
+    ClientTasks clientTasks;
 
     @CreationTimestamp
     @Column(name = "created_date")
     Date createdDate;
 }
+

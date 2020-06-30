@@ -20,7 +20,6 @@ public class NotificationController {
     public String getNotificationList(Model model) {
         List<Notification> notificationList = notificationService.getAllNotifications();
         model.addAttribute("notificationList", notificationList);
-        model.addAttribute("bool", true);
         return "notificationList";
     }
 

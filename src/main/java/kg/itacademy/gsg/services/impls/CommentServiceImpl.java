@@ -1,9 +1,12 @@
 package kg.itacademy.gsg.services.impls;
 
 import kg.itacademy.gsg.entities.Comment;
+import kg.itacademy.gsg.models.CommentModel;
 import kg.itacademy.gsg.repositories.CommentRepository;
 import kg.itacademy.gsg.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +42,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteCommentById(Long id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<CommentModel> getAllCommentsByTask(Long taskId, Pageable pageable) {
+        return commentRepository.getAllCommentsByTask(taskId, pageable);
     }
 }

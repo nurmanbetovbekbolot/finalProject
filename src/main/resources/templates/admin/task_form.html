@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <form action="#" th:action="${add} ? '/task/create/'+${packageId}+'/'+${catId} : (${packageId} ? '/task/update/' + ${task.id}+'/'+${packageId}+'/'+${catId} : '/task/update/' + ${task.id})" method="post">
+        <form action="#" th:action="${add} ? (${orderId}?'/task/create/'+${orderId}:'/task/create/'+${packageId}+'/'+${catId} ): (${packageId} ? '/task/update/' + ${task.id}+'/'+${packageId}+'/'+${catId} : '/task/update/' + ${task.id})" method="post">
             <div class="form-group">
                 <label for="taskNameInput">Название задачи</label>
                 <input th:value="${add} ? '' : ${task.title}" type="text" name="title" class="form-control"
@@ -30,14 +30,14 @@
                 <input th:value="${add} ? '' : ${task.description}" type="text" name="description" class="form-control"
                        id="taskDescInput" placeholder="Введите описание" minlength="5" maxlength="1000" required>
             </div>
-            <div th:if="${!add}" class="form-group">
-                <label class="text-danger font-bold" for="input-select">Статус задачи</label>
-                <select name="taskStatus" class="form-control" id="input-select">
-                    <option value="TODO">ВЫПОЛНИТЬ</option>
-                    <option value="INPROGRESS">ВЫПОЛНЯЕТСЯ</option>
-                    <option value="DONE">ВЫПОЛНЕНО</option>
-                </select>
-            </div>
+<!--            <div th:if="${!add}" class="form-group">-->
+<!--                <label class="text-danger font-bold" for="input-select">Статус задачи</label>-->
+<!--                <select name="taskStatus" class="form-control" id="input-select">-->
+<!--                    <option value="TODOOO">ВЫПОЛНИТЬ</option>-->
+<!--                    <option value="INPROGRESS">ВЫПОЛНЯЕТСЯ</option>-->
+<!--                    <option value="DONE">ВЫПОЛНЕНО</option>-->
+<!--                </select>-->
+<!--            </div>-->
             <button type="submit" class="btn btn-primary">Отправить</button>
         </form>
     </div>
